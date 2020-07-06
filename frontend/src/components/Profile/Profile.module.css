@@ -1,0 +1,10 @@
+.profile{
+    grid-area: profile;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;   
+}
+.profile > div{
+    margin: 10px;
+}
