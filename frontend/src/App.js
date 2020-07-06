@@ -1,9 +1,11 @@
 import React from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Sidebar from './components/Sidebar/Sidebar';
+
 import Profile from './components/Profile/Profile';
 import Header from './components/Header/Header';
+import Side from './components/Sidebar/Sidebar';
 
 
 
@@ -11,7 +13,7 @@ const App = () => {
   return (
     <div className='app-wrapper'>
       <Header />
-      <Sidebar />
+      <Side />
       <Profile />
     </div>
   );

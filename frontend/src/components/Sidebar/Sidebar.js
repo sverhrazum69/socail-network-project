@@ -1,26 +1,33 @@
-import React from 'react'
-import s from './Sidebar.module.css'
+import React from "react";
+import Sidebar from "react-sidebar";
 
-const Sidebar = () => {
+class Side extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sidebarOpen: true
+    };
+    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
+  }
+
+  onSetSidebarOpen(open) {
+    this.setState({ sidebarOpen: open });
+  }
+
+  render() {
     return (
-        <div className={s.sidebar}>
-            <div className={s.flexWrapper}>
-
-                <div className={s.flexItem}>
-                    View Profile
-                </div>
-                <div className={s.flexItem}>
-                    frend list
-                </div>
-                <div className={s.flexItem}>
-                    Search
-                </div>
-                <div className={s.flexItem}>
-                    Store
-                </div>
-            </div>
-        </div>
-    )
+      <Sidebar
+        sidebar={<b>Sidebar content</b>}
+        open={this.state.sidebarOpen}
+        onSetOpen={this.onSetSidebarOpen}
+        styles={{ sidebar: { background: "white" } }}
+      >
+        <button onClick={() => this.onSetSidebarOpen(true)}>
+          Open sidebar
+        </button>
+      </Sidebar>
+    );
+  }
 }
 
-export default Sidebar
+export default Side;
