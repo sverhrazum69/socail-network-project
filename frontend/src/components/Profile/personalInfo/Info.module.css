@@ -1,4 +1,23 @@
 .wrapper{
-    display: inline-flex;
+    display: flex;
+    flex-direction: column;
     margin: auto;
+
+}
+
+.item{
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: 
+    "categ desc"
+    ;
+}
+
+.description{    
+    grid-area: desc;
+}
+
+.category{
+    grid-area: categ;
 }

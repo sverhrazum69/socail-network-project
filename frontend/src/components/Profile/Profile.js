@@ -9,7 +9,8 @@ const Profile = () => {
     return (
         <div className={p.profile}>
             <div>
-                <Info />
+                <Info desc="21.12.2001" category="Birthday:" />
+                <Info desc="21.12.2001" category="shdkaljshdalkjl:" />
             </div>  
             <div>
                 <Links />
