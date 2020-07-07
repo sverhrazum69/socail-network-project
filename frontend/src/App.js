@@ -1,20 +1,22 @@
 import React from 'react';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'antd/dist/antd.css'
 
 
-import Profile from './components/Profile/Profile';
-import Header from './components/Header/Header';
-import Side from './components/Sidebar/Sidebar';
+import SiderDemo from './containers/Layaout/Layout';
+import UserDescription from './components/UserDescription/UserDescription';
+import FirendList from './containers/FriendList/FriendList';
+
 
 
 
 const App = () => {
   return (
     <div className='app-wrapper'>
-      <Header />
-      <Side />
-      <Profile />
+      <SiderDemo>
+        <UserDescription />
+        <FirendList />
+      </SiderDemo>
     </div>
   );
 }
