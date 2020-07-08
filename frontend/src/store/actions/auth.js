@@ -1,7 +1,5 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios'
-import Password from 'antd/lib/input/Password';
-
 //events that are called when appropriate action happens
 
 export const authStart = () => {
@@ -94,3 +92,21 @@ export const authSignup = (username, email,password1,password2) => {
         })
     }
 }
+
+export const authCheckState = () => {
+    return dispatch => {
+        const token = localStorage.getItem('token');
+        if (token === undefined){
+            dispatch(logout())
+        }else{
+            const expirationDate = new Date(localStorage.getItem('expirationDate'))
+            if (expirationDate <= new Date()) {
+                dispatch(logout())
+            } else{
+                dispatch(authSuccess(token))
+                dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 3000))
+            }
+        }
+    }
+}
+

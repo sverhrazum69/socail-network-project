@@ -33,9 +33,14 @@ class SiderDemo extends React.Component {
   render() {
     return (
       <Router>
-        {/* IF NOT LOGGED IN */}
-        <Redirect to="/login" />
+        {
+          this.props.isAuthenticated
+          ? ''
+          : <Redirect to="/login" />
+        }
+        
         <Switch>
+
           <Route path="/login">
             <h2>Helloworld</h2>
           </Route>
