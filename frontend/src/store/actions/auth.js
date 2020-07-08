@@ -42,6 +42,7 @@ export const checkAuthTimeout = expirationTime => {
     }
 }
 
+
 //make post request and get token
 export const authLogin = (username, password) => {
     return dispatch => {
@@ -62,7 +63,34 @@ export const authLogin = (username, password) => {
         })
         .catch(error => {
             console.log(error);
-            dispatch(authFail);
+            dispatch(authFail(error));
+        })
+    }
+}
+
+//sign up
+export const authSignup = (username, email,password1,password2) => {
+    return dispatch => {
+        dispatch(authStart());
+        axios.post('localhost:8000/rest-auth/registration/',{
+            username: username,
+            email: email,
+            password1: password1,
+            password2: password2
+        })
+        .then(res => {
+            const token = res.data.key;
+            const expirationDate = new Date(new Date().getTime() + 3600*3000);
+            localStorage.setItem('token',token);
+            localStorage.setItem('expirationDate',expirationDate);
+            // call event success event
+            dispatch(authSuccess(token));
+            //check if token expired
+            dispatch(checkAuthTimeout(3600));
+        })
+        .catch(error => {
+            console.log(error);
+            dispatch(authFail(error));
         })
     }
 }
