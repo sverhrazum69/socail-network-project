@@ -33,6 +33,7 @@ class SiderDemo extends React.Component {
   render() {
     return (
       <Router>
+        {/* IF NOT LOGGED IN */}
         <Redirect to="/login" />
         <Switch>
           <Route path="/login">
