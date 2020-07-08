@@ -21,9 +21,6 @@ RUN if [ "$USER_GID" != "1000" ] || [ "$USER_UID" != "1000" ]; then \
         groupmod --gid $USER_GID $USERNAME \
         && usermod --uid $USER_UID --gid $USER_GID $USERNAME \
         && chmod -R $USER_UID:$USER_GID /home/$USERNAME; \
-        && apt-get -y install curl gnupg \
-        && curl -sL https://deb.nodesource.com/setup_11.x  | bash - \
-        && apt-get -y install nodejs \
     fi
 
 
@@ -40,4 +37,19 @@ RUN if [ "$USER_GID" != "1000" ] || [ "$USER_UID" != "1000" ]; then \
 #     && apt-get -y install --no-install-recommends <your-package-list-here>
 
 
-    
+# Use an official node runtime as a parent image
+FROM node:12
+
+WORKDIR /app/
+
+# Install dependencies
+# COPY package.json yarn.lock /app/
+
+# RUN npm install
+
+# Add rest of the client code
+COPY . /app/
+
+EXPOSE 3000
+
+# CMD npm start
