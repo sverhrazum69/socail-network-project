@@ -8,6 +8,8 @@ import FirendList from './containers/FriendList/FriendList';
 
 
 import * as actions from './store/actions/auth'
+import URLRouter from './routes';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 
 class App extends Component {
@@ -17,12 +19,17 @@ class App extends Component {
   }
   render() {
     return (
+
       <div className='app-wrapper'>
-        <SiderDemo {...this.props}>
-          <UserDescription />
-          <FirendList />
-        </SiderDemo>
+        <Router>
+          <SiderDemo {...this.props}>
+            <URLRouter />
+          </SiderDemo>
+        </Router>
+
       </div>
+
+
     );
   }
 
