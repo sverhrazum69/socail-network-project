@@ -3,5 +3,5 @@ from .views import UserAPI
 
 
 urlpatterns = [
-    path('users/',UserAPI.as_view()),
+    path('users/',UserAPI.as_view()),   
 ]
