@@ -1,6 +1,7 @@
 import React from 'react';
 import './Layaout.css';
 import { Layout, Menu } from 'antd';
+import { connect } from 'react-redux'
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,7 +16,7 @@ import {
   UploadOutlined,
 } from '@ant-design/icons';
 import Login from '../login/login';
-
+import * as actions from '../../store/actions/auth'
 
 
 const { Header, Sider, Content } = Layout;
@@ -33,6 +34,7 @@ class SiderDemo extends React.Component {
     });
   };
 
+  
   render() {
     return (
       <Router>
@@ -58,8 +60,8 @@ class SiderDemo extends React.Component {
                   <Menu.Item key="2" icon={<VideoCameraOutlined />}>
                     nav 2
             </Menu.Item>
-                  <Menu.Item key="3" icon={<UploadOutlined />}>
-                    nav 3
+                  <Menu.Item key="3" icon={<UploadOutlined />} onClick={this.props.logout}>
+                    logout
             </Menu.Item>
                 </Menu>
               </Sider>
@@ -90,4 +92,10 @@ class SiderDemo extends React.Component {
   }
 }
 
-export default SiderDemo
+const mapDispatchToProps = dispatch => {
+  return {
+      logout: () => dispatch(actions.logout())
+  }
+}
+
+export default connect(null,mapDispatchToProps)(SiderDemo)
