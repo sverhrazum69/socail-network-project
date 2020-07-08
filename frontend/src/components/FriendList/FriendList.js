@@ -2,7 +2,7 @@ import React from 'react'
 import fm from './FriendList.module.css'
 import { Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import AvatarImg from '../../components/Avatars/Avatars';
+import AvatarImg from './components/Avatars/Avatars';
 
 
 class FirendList extends React.Component {

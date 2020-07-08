@@ -84,11 +84,9 @@ const Login = props => {
                                 Login
                 </Button>
                 Or
-                <NavLink style={{ marginRight: '10px' }} to='/signup/'>
-                                signup
-                </NavLink>
+                <NavLink style={{ marginRight: '10px' }} to='/signup/'> signup</NavLink>
                         </Form.Item>
-                    </Form>
+                </Form>
             }
         </div>
     );

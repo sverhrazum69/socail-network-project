@@ -6,7 +6,6 @@ import {
   Switch,
   Route,
   Redirect,
-  Na
 } from "react-router-dom";
 import {
   MenuUnfoldOutlined,
@@ -15,7 +14,9 @@ import {
   VideoCameraOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
-import Login from '../../components/login/login';
+import Login from '../login/login';
+
+
 
 const { Header, Sider, Content } = Layout;
 
@@ -44,7 +45,7 @@ class SiderDemo extends React.Component {
         <Switch>
 
           <Route path="/login">
-            <Login />
+            <Login />            
           </Route>
           <Route path="/">
             <Layout>

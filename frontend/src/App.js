@@ -3,8 +3,8 @@ import './App.css';
 import 'antd/dist/antd.css'
 import { connect } from 'react-redux';
 import SiderDemo from './containers/Layaout/Layout';
-import UserDescription from './components/UserDescription/UserDescription';
-import FirendList from './containers/FriendList/FriendList';
+//import UserDescription from './components/UserDescription/UserDescription';
+//import FirendList from './containers/FriendList/FriendList';
 
 
 import * as actions from './store/actions/auth'
