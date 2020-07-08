@@ -6,6 +6,7 @@
 # Update the VARIANT arg in docker-compose.yml to pick a Python version: 3, 3.8, 3.7, 3.6 
 ARG VARIANT=3
 FROM mcr.microsoft.com/vscode/devcontainers/python:0-${VARIANT}
+
 ENV PYTHONUNBUFFERED 1
 
 # This image includes a non-root user with sudo access. Use the "remoteUser" 
@@ -26,9 +27,9 @@ RUN if [ "$USER_GID" != "1000" ] || [ "$USER_UID" != "1000" ]; then \
 
 # [Optional] If your requirements rarely change, uncomment this section to add them to the image.
 #
-# COPY requirements.txt /tmp/pip-tmp/
-# RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
-#    && rm -rf /tmp/pip-tmp
+COPY requirements.txt /tmp/pip-tmp/
+RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
+    && rm -rf /tmp/pip-tmp
 
 # ** [Optional] Uncomment this section to install additional packages. **
 #
@@ -37,19 +38,4 @@ RUN if [ "$USER_GID" != "1000" ] || [ "$USER_UID" != "1000" ]; then \
 #     && apt-get -y install --no-install-recommends <your-package-list-here>
 
 
-# Use an official node runtime as a parent image
-FROM node:12
 
-WORKDIR /app/
-
-# Install dependencies
-# COPY package.json yarn.lock /app/
-
-# RUN npm install
-
-# Add rest of the client code
-COPY . /app/
-
-EXPOSE 3000
-
-# CMD npm start
