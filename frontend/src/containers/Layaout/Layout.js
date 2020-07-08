@@ -14,6 +14,7 @@ import {
   VideoCameraOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
+import Login from '../../components/login/login';
 
 const { Header, Sider, Content } = Layout;
 
@@ -36,13 +37,13 @@ class SiderDemo extends React.Component {
         {
           this.props.isAuthenticated
           ? ''
-          : <Redirect to="/login" />
+          : <Redirect to="/login">{console.log(this.props)}</Redirect>
         }
         
         <Switch>
 
           <Route path="/login">
-            <h2>Helloworld</h2>
+            <Login />
           </Route>
           <Route path="/">
             <Layout>
