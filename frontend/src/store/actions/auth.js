@@ -45,7 +45,7 @@ export const checkAuthTimeout = expirationTime => {
 export const authLogin = (username, password) => {
     return dispatch => {
         dispatch(authStart());
-        axios.post('http://localhost/rest-auth/login/',{
+        axios.post('http://localhost:8000/rest-auth/login/',{
             username: username,
             password: password
         })
