@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 
@@ -9,3 +10,4 @@ class User(AbstractUser):
     address = models.CharField(max_length = 100,null=True,blank=True)
     avatar = models.ImageField(null=True,blank=True,upload_to='media')
     desctiption = models.TextField(null=True,blank=True)
+    friends = models.ManyToManyField('self',symmetrical=True)
