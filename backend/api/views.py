@@ -9,7 +9,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 class UsersAPI(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = userSerializer
-# Create your views here.
+
 
 class UserApi(generics.GenericAPIView,
                 ListModelMixin,

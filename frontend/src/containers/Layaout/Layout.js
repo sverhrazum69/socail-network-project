@@ -30,11 +30,11 @@ class SiderDemo extends React.Component {
       collapsed: !this.state.collapsed,
     });
   };
-
   
   render() {
     return (
             <Layout>
+              {console.log(localStorage)}
               <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
                 <div className="logo" />
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>

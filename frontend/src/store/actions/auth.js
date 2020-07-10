@@ -26,6 +26,7 @@ export const authFail = error => {
 export const logout = () => {
     localStorage.removeItem('expirationDate')
     localStorage.removeItem('token')
+    localStorage.removeItem('username')
     return{
         type:actionTypes.AUTH_LOGOUT
     }
@@ -54,6 +55,7 @@ export const authLogin = (username, password) => {
             const expirationDate = new Date(new Date().getTime() + 3600*3000);
             localStorage.setItem('token',token);
             localStorage.setItem('expirationDate',expirationDate);
+            localStorage.setItem('username',username);
             // call event success event
             dispatch(authSuccess(token));
             //check if token expired
@@ -81,6 +83,7 @@ export const authSignup = (username, email,password1,password2) => {
             const expirationDate = new Date(new Date().getTime() + 3600*3000);
             localStorage.setItem('token',token);
             localStorage.setItem('expirationDate',expirationDate);
+            localStorage.setItem('username',username);
             // call event success event
             dispatch(authSuccess(token));
             //check if token expired

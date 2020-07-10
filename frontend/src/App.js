@@ -33,7 +33,7 @@ class App extends Component {
   render() {
     return (
 
-      <Router>
+      <Router {...this.props}>
         {console.log(this.props)}
         <Route exact path="/login/" component={Login} />
         <Route exact path="/signUp/" component={SignUpForm} />
