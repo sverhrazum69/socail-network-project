@@ -17,6 +17,8 @@ import {
 } from '@ant-design/icons';
 import Login from '../login/login';
 import * as actions from '../../store/actions/auth'
+import FirendList from '../../components/FriendList/FriendList';
+import UserDescription from '../../components/UserDescription/UserDescription';
 
 
 const { Header, Sider, Content } = Layout;
@@ -37,19 +39,6 @@ class SiderDemo extends React.Component {
   
   render() {
     return (
-      <Router>
-        {
-          this.props.isAuthenticated
-          ? ''
-          : <Redirect to="/login">{console.log(this.props)}</Redirect>
-        }
-        
-        <Switch>
-
-          <Route path="/login">
-            <Login />            
-          </Route>
-          <Route path="/">
             <Layout>
               <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
                 <div className="logo" />
@@ -80,14 +69,11 @@ class SiderDemo extends React.Component {
                     minHeight: 300,
                   }}
                 >
-                  {this.props.children}
+                  <UserDescription />
+                  <FirendList />
                 </Content>
               </Layout>
             </Layout>
-          </Route>
-        </Switch>
-      </Router>
-
     );
   }
 }

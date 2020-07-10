@@ -1,8 +1,8 @@
 import React from 'react'
 import fm from './FriendList.module.css'
 import { Button } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import AvatarImg from './components/Avatars/Avatars';
+import AvatarImg from '../Avatars/Avatars';
+
 
 
 class FirendList extends React.Component {
@@ -10,6 +10,7 @@ class FirendList extends React.Component {
         return (
             <div>
                 <div className={fm.wrapper}>
+                    <AvatarImg />
                     <AvatarImg />
                     <AvatarImg />
                     <AvatarImg />
