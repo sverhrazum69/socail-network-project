@@ -2,12 +2,7 @@ import React from 'react';
 import './Layaout.css';
 import { Layout, Menu } from 'antd';
 import { connect } from 'react-redux'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -15,7 +10,7 @@ import {
   VideoCameraOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
-import Login from '../login/login';
+
 import * as actions from '../../store/actions/auth'
 import FirendList from '../../components/FriendList/FriendList';
 import UserDescription from '../../components/UserDescription/UserDescription';

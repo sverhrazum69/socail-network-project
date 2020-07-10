@@ -7,7 +7,7 @@ import Login from "./containers/login/login";
 import SignUpForm from "./containers/SignUp/SignUp";
 
 import * as actions from './store/actions/auth'
-import { BrowserRouter as Router, Route, Redirect, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 
 const mapStateToProps = state => {
