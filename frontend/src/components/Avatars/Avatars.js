@@ -3,8 +3,9 @@ import { Avatar } from 'antd';
 
 
 const AvatarImg = props => {
+    const {imgLink = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"} = props  
     return (
-        <Avatar size={128} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+        <Avatar size={128} src={imgLink} />
     )
 }
 
