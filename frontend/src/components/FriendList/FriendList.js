@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import fm from './FriendList.module.css'
 import { Button, Avatar } from 'antd';
-import AvatarImg from '../Avatars/Avatars';
-import { updateObject } from '../../store/utility';
+
 import axios from 'axios'
 
 

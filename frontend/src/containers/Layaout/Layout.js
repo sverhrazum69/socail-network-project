@@ -14,7 +14,6 @@ import {
 import * as actions from '../../store/actions/auth'
 import FirendList from '../../components/FriendList/FriendList';
 import UserDescription from '../../components/UserDescription/UserDescription';
-import { Redirect, NavLink } from 'react-router-dom';
 
 
 const { Header, Sider, Content } = Layout;
@@ -32,11 +31,15 @@ class SiderDemo extends React.Component {
     });
   };
 
+  handleLogout = () => {
+    this.props.logout()
+    this.props.history.push("/login")
+  }
 
   componentDidMount(){
     console.log(localStorage.token);
     if (localStorage.getItem('token') === null){
-    
+
       this.props.history.push("/login")
     }
   }
@@ -56,7 +59,7 @@ class SiderDemo extends React.Component {
                   <Menu.Item key="2" icon={<VideoCameraOutlined />}>
                     nav 2
             </Menu.Item>
-                  <Menu.Item key="3" icon={<UploadOutlined />} onClick={this.props.logout}>
+                  <Menu.Item key="3" icon={<UploadOutlined />} onClick={this.handleLogout}>
                     logout
             </Menu.Item>
                 </Menu>
