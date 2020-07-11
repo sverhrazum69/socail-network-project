@@ -19,6 +19,7 @@ const layout = {
 const Login = props => {
     const onFinish = values => {
         props.onAuth(values.username,values.password)
+        props.history.push("/profilePage/" + values.username)
     };
 
     const onFinishFailed = errorInfo => {
