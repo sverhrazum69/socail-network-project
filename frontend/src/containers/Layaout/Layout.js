@@ -14,6 +14,7 @@ import {
 import * as actions from '../../store/actions/auth'
 import FirendList from '../../components/FriendList/FriendList';
 import UserDescription from '../../components/UserDescription/UserDescription';
+import { Redirect, NavLink } from 'react-router-dom';
 
 
 const { Header, Sider, Content } = Layout;
@@ -30,10 +31,21 @@ class SiderDemo extends React.Component {
       collapsed: !this.state.collapsed,
     });
   };
+
+
+  componentDidMount(){
+    console.log(localStorage.token);
+    if (localStorage.getItem('token') === null){
+    
+      this.props.history.push("/login")
+    }
+  }
   
   render() {
     return (
+            
             <Layout>
+              
               {console.log(localStorage)}
               <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
                 <div className="logo" />

@@ -25,25 +25,20 @@ const mapDispatchToProps = dispatch => {
 
 class App extends Component {
 
+  
   componentDidMount() {
     this.props.AutoSignup();
-  }
-
-
+    }
+  
   render() {
     return (
 
       <Router {...this.props}>
         {console.log(this.props)}
-        <Route exact path="/login/" component={Login} />
+        <Route exact path="/login/" component={Login}/>
         <Route exact path="/signUp/" component={SignUpForm} />
-        <Route exact path="/" render={
-          () => (
-              this.props.isAuthenticated ? <SiderDemo /> : <Login />
-          )
-             
-          
-        } />
+        
+        <Route exact path="/profilePage/:username" component={SiderDemo} />
 
         {/*<SiderDemo {...this.props}>*/}
 
