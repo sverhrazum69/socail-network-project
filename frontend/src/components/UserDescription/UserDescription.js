@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Avatar, Descriptions } from 'antd';
+import PopupForm from '../PopupForm/PopupForm';
 
 const UserDescription = props => {
 
@@ -20,6 +21,7 @@ const UserDescription = props => {
       </Descriptions>
       <Descriptions title="User info" layout="vertical">
         <Descriptions.Item label="UserName">{userInfo.username}</Descriptions.Item>
+        <Descriptions.Item label="email">{userInfo.email}</Descriptions.Item>
         <Descriptions.Item label="Telephone">{userInfo.telephoneNumber !== null && userInfo.telephoneNumber !== "" ? userInfo.telephoneNumber : `undefined`}</Descriptions.Item>
         <Descriptions.Item label="Live in">{userInfo.homeCountry !== null && userInfo.homeCountry !== "" ? userInfo.homeCountry : `undefined`}</Descriptions.Item>
         <Descriptions.Item label="Address" span={2}>
@@ -27,6 +29,7 @@ const UserDescription = props => {
         </Descriptions.Item>
         <Descriptions.Item label="About me">{userInfo.desctiption !== null && userInfo.desctiption !== "" ? userInfo.desctiption : `undefined`}</Descriptions.Item>
       </Descriptions>
+      <PopupForm placeholderValues = {userInfo}/>
     </div>
 
   );

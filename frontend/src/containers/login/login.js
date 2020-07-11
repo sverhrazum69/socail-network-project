@@ -17,9 +17,13 @@ const layout = {
 };
 
 const Login = props => {
+
+    const handleRedirect = () => {
+        props.history.push("/profilePage/" + localStorage.username)
+    }
+
     const onFinish = values => {
         props.onAuth(values.username,values.password)
-        props.history.push("/profilePage/" + values.username)
     };
 
     const onFinishFailed = errorInfo => {
@@ -31,6 +35,7 @@ const Login = props => {
             <p>props.error.message</p>
         )
     }
+    
     return (
         <div>
             {console.log(props)}
@@ -39,6 +44,8 @@ const Login = props => {
                 props.loading
                     ? <Spin indicator={antIcon} />
                     :
+                    !localStorage.getItem('token')
+                    ?
                     <Form
                         {...layout}
                         name="basic"
@@ -82,6 +89,13 @@ const Login = props => {
                 <NavLink style={{ marginRight: '10px' }} to='/signup/'> signup</NavLink>
                         </Form.Item>
                 </Form>
+                :
+                <div>
+                    <h2>You have successfuly loged in,you can visit your page now</h2>
+                    <p>
+                        <button type="button" onClick={handleRedirect}>Visit Page</button> 
+                    </p>
+                </div>
             }
         </div>
     );
