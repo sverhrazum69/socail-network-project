@@ -1,33 +1,46 @@
 import React from 'react'
 
-import { Upload, message, Button } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import ImageUploading from "react-images-uploading";
+// { ImageUploadingPropsType, ImageListType, ImageType } is type for typescript
 
-const props = {
-  name: 'file',
-  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-  headers: {
-    authorization: 'authorization-text',
-  },
-  onChange(info) {
-    if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-};
+const maxNumber = 10;
+const maxMbFileSize = 5 * 1024 * 1024; // 5Mb
 
-const ImageUpload = () => (
-    <Upload {...props}>
-        <Button>
-            <UploadOutlined /> Click to Upload
-        </Button>
-    </Upload>
-)
+class ImageUpload extends React.Component {
+
+
+    onChange = (imageList) => {
+        this.setState(() => {
+            return { imgUrl: imageList[0].dataURL }
+        })
+    };
+
+    render() {
+        return (
+            <ImageUploading
+                onChange={this.onChange}
+                maxNumber={maxNumber}
+                maxFileSize={maxMbFileSize}
+                acceptType={["jpg", "gif", "png"]}
+            >
+                {({ imageList, onImageUpload }) => (
+                    // write your building UI
+                    <div>
+                        <button onClick={onImageUpload}>Upload images</button>
+
+                        {imageList.map((image) => (
+                            <div key={image.key}>
+                                <img src={image.dataURL} width="200px" height="200px" alt="img" />
+                                <button onClick={image.onUpdate}>Update</button>
+                                <button onClick={image.onRemove}>Remove</button>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </ImageUploading>
+        );
+    }
+}
 
 export default ImageUpload
 

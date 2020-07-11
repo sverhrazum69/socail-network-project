@@ -26,6 +26,8 @@ const InputForm = props => {
     console.log(values);
   };
 
+  console.log(props.placeholderValues);
+  
   return (
     <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
       <Form.Item
@@ -37,7 +39,7 @@ const InputForm = props => {
           },
         ]}
       >
-        <Input />
+        <Input placeholder={props.placeholderValues.username}/>
       </Form.Item>
       <Form.Item
         name={['user', 'email']}
@@ -48,19 +50,19 @@ const InputForm = props => {
           },
         ]}
       >
-        <Input />
+        <Input placeholder={props.placeholderValues.email}/>
       </Form.Item>
       <Form.Item name={['user', 'telephoneNumber']} label="Telephone">
-        <Input />
+        <Input placeholder={props.placeholderValues.telephoneNumber} />
       </Form.Item>
       <Form.Item name={['user', 'homeCountry']} label="Live in">
-        <Input />
+        <Input placeholder={props.placeholderValues.homeCountry}/>
       </Form.Item>
       <Form.Item name={['user', 'address']} label="Address">
-        <Input />
+        <Input placeholder={props.placeholderValues.address}/>
       </Form.Item>
       <Form.Item name={['user', 'desctiption']} label="About me">
-        <Input.TextArea />
+        <Input.TextArea placeholder={props.placeholderValues.desctiption}/>
       </Form.Item>
       <Form.Item name={['user', 'avatar']} label="Avatar">
         <ImageUpload />
