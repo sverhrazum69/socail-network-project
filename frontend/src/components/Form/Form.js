@@ -1,7 +1,23 @@
 import React from 'react'
 import { Form, Input, InputNumber, Button } from 'antd';
-import ImageUpload from '../ImageUpload/ImageUpload';
 
+import ImageUpload from '../ImageUpload/ImageUpload';
+import axios from 'axios'
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 const layout = {
   labelCol: {
     span: 8,
@@ -20,18 +36,35 @@ const validateMessages = {
     range: '${label} must be between ${min} and ${max}',
   },
 };
+const csrftoken = getCookie('csrftoken');
 
 const InputForm = props => {
   const onFinish = values => {
-    console.log(values);
+    delete values.avatar
+    values.user.friends = props.placeholderValues.friends
+    
+    let config = {
+        headers: {
+            'Content-Type' : 'application/json',
+            'X-CSRFToken' : csrftoken,
+        }
+    }
+    let data = JSON.stringify(values.user)
+    console.log(data);
+    
+    axios.put("http://localhost:8000/api/users/" + localStorage.username + "/",data,config)
+    .then(() => (
+        props.exit()
+    ))
+    .catch(err => {
+        console.log(err.message);
+    })
   };
 
-  console.log(props.placeholderValues);
-  
   return (
     <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
       <Form.Item
-        name={['user', 'name']}
+        name={['user', 'username']}
         label="Name"
         rules={[
           {
@@ -39,7 +72,7 @@ const InputForm = props => {
           },
         ]}
       >
-        <Input placeholder={props.placeholderValues.username}/>
+        <Input defaultValue={props.placeholderValues.username}/>
       </Form.Item>
       <Form.Item
         name={['user', 'email']}
@@ -50,19 +83,19 @@ const InputForm = props => {
           },
         ]}
       >
-        <Input placeholder={props.placeholderValues.email}/>
+        <Input defaultValue={props.placeholderValues.email}/>
       </Form.Item>
       <Form.Item name={['user', 'telephoneNumber']} label="Telephone">
-        <Input placeholder={props.placeholderValues.telephoneNumber} />
+        <Input defaultValue={props.placeholderValues.telephoneNumber} />
       </Form.Item>
       <Form.Item name={['user', 'homeCountry']} label="Live in">
-        <Input placeholder={props.placeholderValues.homeCountry}/>
+        <Input defaultValue={props.placeholderValues.homeCountry}/>
       </Form.Item>
       <Form.Item name={['user', 'address']} label="Address">
-        <Input placeholder={props.placeholderValues.address}/>
+        <Input defaultValue={props.placeholderValues.address}/>
       </Form.Item>
       <Form.Item name={['user', 'desctiption']} label="About me">
-        <Input.TextArea placeholder={props.placeholderValues.desctiption}/>
+        <Input.TextArea defaultValue={props.placeholderValues.desctiption}/>
       </Form.Item>
       <Form.Item name={['user', 'avatar']} label="Avatar">
         <ImageUpload />
