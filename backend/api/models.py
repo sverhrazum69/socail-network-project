@@ -11,3 +11,9 @@ class User(AbstractUser):
     avatar = models.ImageField(null=True,blank=True,upload_to='')
     desctiption = models.TextField(null=True,blank=True)
     friends = models.ManyToManyField('self',symmetrical=True)
+
+class Friend_request(models.Model):
+    from_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="from_user")
+    to_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="to_user")
+    def __str__(self):
+        return f"From {self.from_user.username} to {self.to_user.username}"
