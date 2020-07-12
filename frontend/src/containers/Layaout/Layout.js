@@ -79,8 +79,8 @@ class SiderDemo extends React.Component {
                     minHeight: 300,
                   }}
                 >
-                  <UserDescription />
-                  <FirendList />
+                  <UserDescription displayUser={this.props.match.params.username}/>
+                  <FirendList displayUser={this.props.match.params.username}/>
                 </Content>
               </Layout>
             </Layout>

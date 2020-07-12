@@ -8,7 +8,7 @@ const UserDescription = props => {
   const [userInfo, updateUserInfo] = useState({})
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/users/' + localStorage.username + '/')
+    axios.get('http://localhost:8000/api/users/' + props.displayUser + '/')
       .then(response => {
         updateUserInfo(response.data)
       })
@@ -29,7 +29,12 @@ const UserDescription = props => {
         </Descriptions.Item>
         <Descriptions.Item label="About me">{userInfo.desctiption !== null && userInfo.desctiption !== "" ? userInfo.desctiption : `undefined`}</Descriptions.Item>
       </Descriptions>
-      <PopupForm placeholderValues = {userInfo}/>
+      {
+        props.displayUser === localStorage.username
+        ? <PopupForm placeholderValues = {userInfo}/>
+        : <button type="submit">Add friend</button>
+      }
+      
     </div>
 
   );

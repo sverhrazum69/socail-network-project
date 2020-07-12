@@ -9,12 +9,12 @@ const FirendList = props => {
     const [imageLinks, updateLinks] = useState([])
 
     useEffect(() => {
-        axios.get("http://localhost:8000/api/users/" + localStorage.username + "/")
+        axios.get("http://localhost:8000/api/users/" + props.displayUser + "/")
             .then(response => {
                 response.data.friends.forEach(userID => {
                     axios.get("http://localhost:8000/api/users/?id=" + userID)   
                     .then(res => {
-                        updateLinks(imageLinks.push({userID:res.data[0].avatar}))
+                        updateLinks(imageLinks.push({id:userID,avatar:res.data[0].avatar}))
                     }).catch(err => {console.log(err)}) 
                 });
         
@@ -29,8 +29,8 @@ const FirendList = props => {
                 
                 {[imageLinks].map((value, index) => (
                     
-                    value.imageUrl !== null
-                        ? <a href="google.com"><Avatar src={value.imageLinks} size={128} /></a>
+                    value.avatar !== null
+                        ? <a href="google.com"><Avatar src={value.avatar} size={128} key={index} /></a>
                         : <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" href="google.com" size={128} key={index} />
         
                     
