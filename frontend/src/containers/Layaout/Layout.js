@@ -96,7 +96,7 @@ const SiderDemo = props => {
                   }}
                 >
                   <UserDescription userInfo={userData} updateUserData={updateInfo}/>
-                  <FirendList displayUser={props.match.params.username}/>
+                  <FirendList userInfo={userData}/>
                 </Content>
               </Layout>
             </Layout>

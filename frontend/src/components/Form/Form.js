@@ -58,7 +58,6 @@ const InputForm = props => {
             'X-CSRFToken' : csrftoken,
         }
     }
-   // let data = JSON.stringify(values.user)
     console.log(data);
     
     axios.put("http://localhost:8000/api/users/" + localStorage.username + "/",data,config)
