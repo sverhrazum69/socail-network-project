@@ -10,7 +10,7 @@ class ImageUpload extends React.Component {
 
 
     onChange = (imageList) => {
-        this.setState(() => {
+        this.setState(() => {        
             return { imgUrl: imageList[0].dataURL }
         })
     };
@@ -27,9 +27,11 @@ class ImageUpload extends React.Component {
                     // write your building UI
                     <div>
                         <button onClick={onImageUpload}>Upload images</button>
-
+                        
                         {imageList.map((image) => (
+                            
                             <div key={image.key}>
+                                {console.log(image)}
                                 <img src={image.dataURL} width="200px" height="200px" alt="img" />
                                 <button onClick={image.onUpdate}>Update</button>
                                 <button onClick={image.onRemove}>Remove</button>

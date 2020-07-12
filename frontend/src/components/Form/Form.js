@@ -1,5 +1,5 @@
-import React from 'react'
-import { Form, Input, InputNumber, Button } from 'antd';
+import React, {useRef,useState} from 'react'
+import { Form, Input, Button } from 'antd';
 
 import ImageUpload from '../ImageUpload/ImageUpload';
 import axios from 'axios'
@@ -26,30 +26,39 @@ const layout = {
     span: 16,
   },
 };
-const validateMessages = {
-  required: '${label} is required!',
+/*const validateMessages = {
+  required: `${label} is required!`,
   types: {
-    email: '${label} is not validate email!',
-    number: '${label} is not a validate number!',
+    email: `${label} is not validate email!`,
+    number: `${label} is not a validate number!`,
   },
   number: {
-    range: '${label} must be between ${min} and ${max}',
+    range: `${label} must be between ${min} and ${max}`,
   },
-};
+};*/
 const csrftoken = getCookie('csrftoken');
 
 const InputForm = props => {
+  const imgRef = useRef(null)
+  const [imgFile,updateImgFile] = useState()
   const onFinish = values => {
-    delete values.avatar
+   //  delete values.avata
+    const data = new FormData()
     values.user.friends = props.placeholderValues.friends
+    values.user.avatar = imgFile
+    for (const [key,val] of Object.entries(values.user)){
+      if (val !== undefined){
+        data.append(key,val)
+      }
+    }
     
+    console.log(values.user)
     let config = {
         headers: {
-            'Content-Type' : 'application/json',
             'X-CSRFToken' : csrftoken,
         }
     }
-    let data = JSON.stringify(values.user)
+   // let data = JSON.stringify(values.user)
     console.log(data);
     
     axios.put("http://localhost:8000/api/users/" + localStorage.username + "/",data,config)
@@ -57,12 +66,12 @@ const InputForm = props => {
         props.exit()
     ))
     .catch(err => {
-        console.log(err.message);
+        console.error(err.response);
     })
   };
 
   return (
-    <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
+    <Form {...layout} name="nest-messages" onFinish={onFinish} /*validateMessages={validateMessages}*/>
       <Form.Item
         name={['user', 'username']}
         label="Name"
@@ -98,7 +107,8 @@ const InputForm = props => {
         <Input.TextArea defaultValue={props.placeholderValues.desctiption}/>
       </Form.Item>
       <Form.Item name={['user', 'avatar']} label="Avatar">
-        <ImageUpload />
+        <input type="file" onChange={(e) => updateImgFile(e.target.files[0])} />
+        {/*<ImageUpload ref={imgRef}/>*/}
       </Form.Item>
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
         <Button type="primary" htmlType="submit">
