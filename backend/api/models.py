@@ -15,5 +15,6 @@ class User(AbstractUser):
 class Friend_request(models.Model):
     from_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="from_user")
     to_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="to_user")
+    accepted = models.BooleanField(default=False)
     def __str__(self):
         return f"From {self.from_user.username} to {self.to_user.username}"
