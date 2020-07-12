@@ -5,7 +5,6 @@ import PopupForm from '../PopupForm/PopupForm';
 import Cookies from 'js-cookie'
 const UserDescription = props => {
 
-  const [userInfo, updateUserInfo] = useState({})
   let csrftoken = Cookies.get('csrftoken')
   let config = {
     headers: {
@@ -23,39 +22,39 @@ const UserDescription = props => {
     getId().then(myID => {
       axios.post('http://localhost:8000/api/friendRequests/', {
         'from_user': myID,
-        'to_user': userInfo.id
+        'to_user': props.userInfo.id
       }, config)
-        .then(() => console.log("success"))
+        .then(() => console.log())
         .catch(err => console.log(err.response))
     }).catch(e => { console.log(e.response) })
   }
 
 
-  useEffect(() => {
+  /*useEffect(() => {
     axios.get('http://localhost:8000/api/users/' + props.displayUser + '/')
       .then(response => {
-        updateUserInfo(response.data)
+        //updateUserInfo(response.data)
       })
-  })
+  })*/
 
   return (
     <div>
       <Descriptions title="" layout="vertical">
-        <Descriptions.Item>{userInfo.avatar !== null ? <Avatar size={128} src={userInfo.avatar} /> : <Avatar size={128} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}</Descriptions.Item>
+        <Descriptions.Item>{props.userInfo.avatar !== null ? <Avatar size={128} src={props.userInfo.avatar} /> : <Avatar size={128} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}</Descriptions.Item>
       </Descriptions>
       <Descriptions title="User info" layout="vertical">
-        <Descriptions.Item label="UserName">{userInfo.username}</Descriptions.Item>
-        <Descriptions.Item label="email">{userInfo.email}</Descriptions.Item>
-        <Descriptions.Item label="Telephone">{userInfo.telephoneNumber !== null && userInfo.telephoneNumber !== "" ? userInfo.telephoneNumber : `undefined`}</Descriptions.Item>
-        <Descriptions.Item label="Live in">{userInfo.homeCountry !== null && userInfo.homeCountry !== "" ? userInfo.homeCountry : `undefined`}</Descriptions.Item>
+        <Descriptions.Item label="UserName">{props.userInfo.username}</Descriptions.Item>
+        <Descriptions.Item label="email">{props.userInfo.email}</Descriptions.Item>
+        <Descriptions.Item label="Telephone">{props.userInfo.telephoneNumber !== null && props.userInfo.telephoneNumber !== "" ? props.userInfo.telephoneNumber : `undefined`}</Descriptions.Item>
+        <Descriptions.Item label="Live in">{props.userInfo.homeCountry !== null && props.userInfo.homeCountry !== "" ? props.userInfo.homeCountry : `undefined`}</Descriptions.Item>
         <Descriptions.Item label="Address" span={2}>
-          {userInfo.address !== null && userInfo.address !== "" ? userInfo.address : `undefined`}
+          {props.userInfo.address !== null && props.userInfo.address !== "" ? props.userInfo.address : `undefined`}
         </Descriptions.Item>
-        <Descriptions.Item label="About me">{userInfo.desctiption !== null && userInfo.desctiption !== "" ? userInfo.desctiption : `undefined`}</Descriptions.Item>
+        <Descriptions.Item label="About me">{props.userInfo.desctiption !== null && props.userInfo.desctiption !== "" ? props.userInfo.desctiption : `undefined`}</Descriptions.Item>
       </Descriptions>
       {
-        props.displayUser === localStorage.username
-          ? <PopupForm placeholderValues={userInfo} />
+        props.userInfo.username === localStorage.username
+          ? <PopupForm placeholderValues={props.userInfo} updateUserData={props.updateUserData}/>
           : <button type="submit" onClick={sendFriendRequest}>Add friend</button>
       }
 

@@ -62,9 +62,10 @@ const InputForm = props => {
     console.log(data);
     
     axios.put("http://localhost:8000/api/users/" + localStorage.username + "/",data,config)
-    .then(() => (
+    .then(() => {
+        props.updateUserData()
         props.exit()
-    ))
+    })
     .catch(err => {
         console.error(err.response);
     })

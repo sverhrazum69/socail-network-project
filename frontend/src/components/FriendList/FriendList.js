@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, { useState, useEffect } from 'react'
 import fm from './FriendList.module.css'
 import { Button, Avatar } from 'antd';
@@ -8,10 +9,11 @@ import axios from 'axios'
 const FirendList = props => {
     const [imageLinks, updateLinks] = useState([])
    
+    
+
     useEffect(() => {
         axios.get("http://localhost:8000/api/users/" + props.displayUser + "/")
             .then(response => {
-            
                 response.data.friends.forEach(userID => {
                     
                     axios.get("http://localhost:8000/api/users/?id=" + userID)   

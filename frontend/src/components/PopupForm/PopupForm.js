@@ -13,7 +13,7 @@ const PopupForm = props => (
         <div className="header"> Edit data </div>
         <div className="content">
           {" "}
-            <InputForm placeholderValues = {props.placeholderValues} exit={close}/>  
+            <InputForm placeholderValues = {props.placeholderValues} updateUserData={props.updateUserData} exit={close}/>  
         </div>
         <div className="actions">
 

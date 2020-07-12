@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useState,useEffect,useRef} from 'react';
 import './Layaout.css';
 import { Layout, Menu } from 'antd';
 import { connect } from 'react-redux'
-
+import axios from 'axios'
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -20,37 +20,53 @@ const { Header, Sider, Content } = Layout;
 
 
 
-class SiderDemo extends React.Component {
-  state = {
-    collapsed: true,
-  };
 
-  toggle = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  };
+const SiderDemo = props => {
 
-  handleLogout = () => {
-    this.props.logout()
-    this.props.history.push("/login")
-  }
+  const displayUser = props.match.params.username
 
-  componentDidMount(){
-    console.log(localStorage.token);
-    if (localStorage.getItem('token') === null){
-
-      this.props.history.push("/login")
-    }
+  const getUserInfo = async () => {
+    let response = await axios.get('http://localhost:8000/api/users/' + displayUser + '/')
+    return response.json()
   }
   
-  render() {
+  const [collapsed,setState] = useState(false)
+  const [userData,updateData] = useState({})
+  const updateInfo = () => {
+    const getData = async() => {
+      const response = await axios.get('http://localhost:8000/api/users/' + displayUser + '/')
+      return response.data
+    }
+    getData().then(response => {
+      updateData(response)
+      console.log(userData);
+    }).catch(e => console.log(e.response))
+  }
+  const toggle = () => {
+    setState(!collapsed);
+  };
+
+  const handleLogout = () => {
+    props.logout()
+    props.history.push("/login")
+  }
+
+  useEffect(() => {
+    if (localStorage.getItem('token') === null){
+      props.history.push("/login")
+    }
+  })
+
+  useEffect(() => {
+      updateInfo()
+ /*   axios.get('http://localhost:8000/api/users/' + displayUser + '/').then(response => {
+      updateData(response.data)
+    }).catch(e => console.log(e.response))*/
+  },[])
+    
     return (
-            
             <Layout>
-              
-              {console.log(localStorage)}
-              <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
+              <Sider trigger={null} collapsible collapsed={collapsed}>
                 <div className="logo" />
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
                   <Menu.Item key="1" icon={<UserOutlined />}>
@@ -59,16 +75,16 @@ class SiderDemo extends React.Component {
                   <Menu.Item key="2" icon={<VideoCameraOutlined />}>
                     nav 2
             </Menu.Item>
-                  <Menu.Item key="3" icon={<UploadOutlined />} onClick={this.handleLogout}>
+                  <Menu.Item key="3" icon={<UploadOutlined />} onClick={handleLogout}>
                     logout
             </Menu.Item>
                 </Menu>
               </Sider>
               <Layout className="site-layout">
                 <Header className="site-layout-background" style={{ padding: 0 }}>
-                  {React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                  {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                     className: 'trigger',
-                    onClick: this.toggle,
+                    onClick: toggle,
                   })}
                 </Header>
                 <Content
@@ -79,13 +95,12 @@ class SiderDemo extends React.Component {
                     minHeight: 300,
                   }}
                 >
-                  <UserDescription displayUser={this.props.match.params.username}/>
-                  <FirendList displayUser={this.props.match.params.username}/>
+                  <UserDescription userInfo={userData} updateUserData={updateInfo}/>
+                  <FirendList displayUser={props.match.params.username}/>
                 </Content>
               </Layout>
             </Layout>
     );
-  }
 }
 
 const mapDispatchToProps = dispatch => {
