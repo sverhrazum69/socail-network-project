@@ -46,6 +46,10 @@ class manageFriendRequests(generics.GenericAPIView,
             return self.update(request)
     def delete(self,request,pk=None):
         if pk:
+            friendRequest = Friend_request.objects.get(id=pk)
+            if friendRequest.accepted:
+                friendRequest.from_user.friends.add(friendRequest.to_user)
+                friendRequest.save()
             return self.destroy(request)
 
 
