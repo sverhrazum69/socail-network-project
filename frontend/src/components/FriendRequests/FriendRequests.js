@@ -3,7 +3,6 @@ import { List, Avatar, Button, Skeleton } from 'antd';
 import './FriendRequests.css'
 import axios from 'axios';
 import Cookies from 'js-cookie'
-const count = 3;
 
 const FriendRequests = props => {
     const [state, setState] = useState({
@@ -13,10 +12,10 @@ const FriendRequests = props => {
     })
     const [activeRequests,updateactiveRequests] = useState([])
 
-    useEffect(() => {
+    const updateInfo  = () => {
         axios.get("http://localhost:8000/api/friendRequests/?to_user=" + props.userID)
         .then(res => {
-            console.log(res)
+            updateactiveRequests([])
             res.data.forEach(obj => {
                 console.log("fdfsdfd")    
                 if (activeRequests.length !== res.data.length){
@@ -28,7 +27,6 @@ const FriendRequests = props => {
                         id : obj.id
                     }])
                 }            
-               
             });
             setState({
                 initLoading: false,
@@ -37,7 +35,11 @@ const FriendRequests = props => {
             console.log(state);
         })
         .catch(e => console.log(e.response))
-    }, [activeRequests])
+    }
+    
+    useEffect(() => {
+        updateInfo()
+    }, [])
 
 
     const csrftoken = Cookies.get('csrftoken')
@@ -49,7 +51,6 @@ const FriendRequests = props => {
       }
 
     const handleAccept = item => {
-        
         let url = "http://localhost:8000/api/friendRequests/" + item.id + "/"
         axios.put(url,{
             'accepted':true,
@@ -64,9 +65,10 @@ const FriendRequests = props => {
 
     const deleteRequest = id => {
         axios.delete("http://localhost:8000/api/friendRequests/" + id + "/",config)
-        .then(() => console.log("deleted successfully"))
+        .then(() => updateInfo())
         .catch(e => console.log(e.response))
     }
+
 
     const { initLoading, loading } = state;
     const loadMore =
@@ -116,6 +118,5 @@ const FriendRequests = props => {
         </div>
     );
 }
-
 
 export default FriendRequests

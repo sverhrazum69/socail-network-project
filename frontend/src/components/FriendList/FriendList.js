@@ -12,12 +12,10 @@ const FirendList = props => {
         
         try{
             console.log(props.userInfo.friends)
+            updateLinks([])
             props.userInfo.friends.forEach(userID => {
                 axios.get("http://localhost:8000/api/users/?id=" + userID)
                 .then(res => {  
-                    if (imageLinks.length >= props.userInfo.friends.length){
-                        updateLinks([])
-                    }
                     updateLinks(imageLinks => [...imageLinks, { username: res.data[0].username, avatar: res.data[0].avatar }])
                 }).catch(err => { console.log(err) })    
             });
