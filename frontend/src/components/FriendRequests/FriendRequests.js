@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { List, Avatar, Button, Skeleton } from 'antd';
 import './FriendRequests.css'
 import axios from 'axios';
+import Cookies from 'js-cookie'
 const count = 3;
 
 const FriendRequests = props => {
@@ -24,6 +25,7 @@ const FriendRequests = props => {
                         avatar: obj.from_user.avatar,
                         requestorId: obj.from_user.id,
                         requestorUsername: obj.from_user.username,
+                        id : obj.id
                     }])
                 }            
                
@@ -38,7 +40,35 @@ const FriendRequests = props => {
     }, [activeRequests])
 
 
-    const { initLoading, loading, list } = state;
+    const csrftoken = Cookies.get('csrftoken')
+    const config = {
+        headers: {
+          'X-CSRFToken': csrftoken,
+          'Content-Type': 'application/json'
+        }
+      }
+
+    const handleAccept = item => {
+        
+        let url = "http://localhost:8000/api/friendRequests/" + item.id + "/"
+        axios.put(url,{
+            'accepted':true,
+            'from_user':item.requestorId,
+            'to_user':props.userID
+        },config)
+        .then(response => {
+            console.log(response)
+            deleteRequest(item.id)
+        }).catch(e => console.log(e.response))
+    }
+
+    const deleteRequest = id => {
+        axios.delete("http://localhost:8000/api/friendRequests/" + id + "/",config)
+        .then(() => console.log("deleted successfully"))
+        .catch(e => console.log(e.response))
+    }
+
+    const { initLoading, loading } = state;
     const loadMore =
         !initLoading && !loading ? (
             <div
@@ -66,17 +96,19 @@ const FriendRequests = props => {
                 dataSource={activeRequests}
                 renderItem={item => (
                     <List.Item
-                        actions={[<a key="list-loadmore-edit">edit</a>, <a key="list-loadmore-more">more</a>]}
-                    >
+                >
                         <Skeleton avatar title={false} loading={item.loading} active>
                             <List.Item.Meta
                                 avatar={
-                                    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                                    item.avatar === null
+                                    ? <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                                    : <Avatar src={item.avatar}/>
                                 }
                                 title={<a href={item.requestorUsername}>{"Friend request from " + item.requestorUsername}</a>}
                                 description={item.requestorUsername + " wants to be friends with you!"}
                             />
-                            <div>{item.accepted}</div>
+                            <button type="button" onClick={() => handleAccept(item)} key="list-loadmore-edit">accept</button>
+                            <button type="button" onClick={() => deleteRequest(item.id)} key="list-loadmore-more">decline</button>
                         </Skeleton>
                     </List.Item>
                 )}
