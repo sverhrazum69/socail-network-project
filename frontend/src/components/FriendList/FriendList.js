@@ -23,7 +23,6 @@ const FirendList = props => {
             });
         }
         catch(e){}
-        
     }, [props.userInfo])
 
     return (

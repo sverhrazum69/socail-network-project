@@ -11,35 +11,6 @@ const FriendRequests = props => {
         
     })
     const [activeRequests,updateactiveRequests] = useState([])
-    const update = () => {
-        const getData = async () => {
-            const response = await axios.get("http://localhost:8000/api/friendRequests/?to_user=" + props.userID)
-            return response.data
-        }
-        getData().then(res => {
-            res.forEach(obj => {
-                let req = {
-                    accepted: obj.accepted,
-                    avatar: obj.from_user.avatar,
-                    requestorId: obj.from_user.id,
-                    requestorUsername: obj.from_user.username,
-                }
-                updateactiveRequests(activeRequests => [...activeRequests,req])
-            });
-            console.log(activeRequests);
-    
-            setState({
-                initLoading: false,
-                loading: false,
-            })
-            console.log(state);
-        })
-            
-        
-        //getData().catch(e => { console.error(e.response) })
-    }
-
-    
 
     useEffect(() => {
         axios.get("http://localhost:8000/api/friendRequests/?to_user=" + props.userID)
