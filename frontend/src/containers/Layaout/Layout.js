@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import React, { useState, useEffect } from 'react';
 import './Layaout.css';
 import { Layout, Menu } from 'antd';
@@ -33,7 +32,7 @@ const SiderDemo = props => {
   const [pageContent, updateContent] = useState()
   const updateInfo = () => {
     const getData = async () => {
-      console.log(displayUser)
+      
       const response = await axios.get('http://localhost:8000/api/users/' + displayUser + '/')
 
       updateContent(
@@ -48,7 +47,7 @@ const SiderDemo = props => {
       return response.data
     }
     getData().then(() => {
-      console.log("success")
+      
     }).catch(e => console.log(e.response))
   }
   const toggle = () => {
@@ -67,8 +66,25 @@ const SiderDemo = props => {
   })
 
   useEffect(() => {
-    updateInfo()
-  }, [])
+    const getData = async () => {
+      
+      const response = await axios.get('http://localhost:8000/api/users/' + displayUser + '/')
+
+      updateContent(
+        <>
+          <UserDescription userInfo={response.data} updateUserData={updateInfo} />
+          <FirendList userInfo={response.data} />)
+        </>
+      )
+      updateData(response.data)
+      console.log(response.data);
+      
+      return response.data
+    }
+    getData().then(() => {
+    
+    }).catch(e => console.log(e.response))
+  }, [displayUser])
 
 
 
@@ -78,29 +94,26 @@ const SiderDemo = props => {
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo" />
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-          <Menu.Item key="1" icon={<UserOutlined />} onClick={() => updateContent(
+          <Menu.Item key="1" icon={<UserOutlined />} onClick={() => {props.history.push(localStorage.username)
+          updateInfo()  
+        }/*updateContent(
             <>
               <UserDescription userInfo={userData} updateUserData={updateInfo} />
               <FirendList userInfo={userData} />)
-                  </>
-          )}>
+            </>
+          )*/}>
             User profile
                   </Menu.Item>
           <Menu.Item key="2" icon={<VideoCameraOutlined />} onClick={() => {
-            {
-              localStorage.username === userData.username
-              ? updateContent(
-                <>
-                  <FriendRequests userID={userData.id} />
-                </>
-              )
-              : props.history.push(localStorage.username)
-                
-              }
-
+            props.history.push(localStorage.username)
+            updateContent(
+            <>
+              <FriendRequests userID={userData.id}/>
+            </>
+            )
           }
           }>
-            Friend requests
+            Friend requestss
             </Menu.Item>
           <Menu.Item key="3" icon={<UploadOutlined />} onClick={handleLogout}>
             logout

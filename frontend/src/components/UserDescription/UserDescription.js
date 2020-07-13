@@ -16,7 +16,6 @@ const UserDescription = props => {
   const sendFriendRequest = () => {
     let getId = async () => {
       let response = await axios.get('http://localhost:8000/api/users/' + localStorage.username + '/')
-      console.log(response)
       return response.data.id
     }
     getId().then(myID => {
