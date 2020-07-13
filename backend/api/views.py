@@ -34,6 +34,9 @@ class manageFriendRequests(generics.GenericAPIView,
                             UpdateModelMixin):
     queryset = Friend_request.objects.all()
     serializer_class = friendRequestSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = '__all__'
+
     def get(self,request,pk=None):
         if pk:
             return self.retrieve(request)
