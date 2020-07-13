@@ -83,7 +83,7 @@ const SiderDemo = props => {
                   </Menu.Item>
                   <Menu.Item key="2" icon={<VideoCameraOutlined />} onClick={() => updateContent(
                     <>
-                    <FriendRequests/>
+                    <FriendRequests userID={userData.id}/>
                     </>
                   )}>
                     Friend requests

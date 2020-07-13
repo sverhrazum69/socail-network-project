@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .serializers import userSerializer, friendRequestSerializer
+from .serializers import userSerializer, friendRequestReadSerializer, friendRequestWriteSerializer
 from rest_framework import generics, viewsets
 from rest_framework.response import Response
 from django.http import Http404
@@ -33,10 +33,13 @@ class manageFriendRequests(generics.GenericAPIView,
                             DestroyModelMixin,
                             UpdateModelMixin):
     queryset = Friend_request.objects.all()
-    serializer_class = friendRequestSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = '__all__'
-
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return friendRequestReadSerializer
+        else:
+            return friendRequestWriteSerializer
     def get(self,request,pk=None):
         if pk:
             return self.retrieve(request)
