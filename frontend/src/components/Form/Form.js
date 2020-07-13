@@ -1,7 +1,7 @@
-import React, {useRef,useState} from 'react'
+import React, {useState} from 'react'
 import { Form, Input, Button } from 'antd';
 
-import ImageUpload from '../ImageUpload/ImageUpload';
+//import ImageUpload from '../ImageUpload/ImageUpload';
 import axios from 'axios'
 function getCookie(name) {
     let cookieValue = null;
@@ -39,7 +39,6 @@ const layout = {
 const csrftoken = getCookie('csrftoken');
 
 const InputForm = props => {
-  const imgRef = useRef(null)
   const [imgFile,updateImgFile] = useState()
   const onFinish = values => {
    //  delete values.avata

@@ -1,4 +1,5 @@
-import React, {useState,useEffect,useRef} from 'react';
+/*eslint-disable*/
+import React, {useState,useEffect} from 'react';
 import './Layaout.css';
 import { Layout, Menu } from 'antd';
 import { connect } from 'react-redux'
@@ -24,11 +25,6 @@ const { Header, Sider, Content } = Layout;
 const SiderDemo = props => {
 
   const displayUser = props.match.params.username
-
-  const getUserInfo = async () => {
-    let response = await axios.get('http://localhost:8000/api/users/' + displayUser + '/')
-    return response.json()
-  }
   
   const [collapsed,setState] = useState(false)
   const [userData,updateData] = useState({})
