@@ -15,6 +15,9 @@ const FirendList = props => {
                 axios.get("http://localhost:8000/api/users/?id=" + userID)
                 .then(res => {
                     console.log(props.userInfo);
+                    if (imageLinks.length === props.userInfo.friends.length){
+                        updateLinks([])
+                    }
                     updateLinks(imageLinks => [...imageLinks, { username: res.data[0].username, avatar: res.data[0].avatar }])
                 }).catch(err => { console.log(err) })    
             });
@@ -29,10 +32,9 @@ const FirendList = props => {
             <div className={fm.wrapper}>
 
                 {imageLinks.map((value, index) => (
-
                     value.avatar !== null
                         ? <a href={value.username}><Avatar src={value.avatar} size={128} key={index} /></a>
-                        : <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" href="google.com" size={128} key={index} />
+                        : <a href={value.username}><Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" size={128} key={index} /></a>
 
                 ))}
 

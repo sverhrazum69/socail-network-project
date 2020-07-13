@@ -15,6 +15,7 @@ import {
 import * as actions from '../../store/actions/auth'
 import FirendList from '../../components/FriendList/FriendList';
 import UserDescription from '../../components/UserDescription/UserDescription';
+import FriendRequests from '../../components/FriendRequests/FriendRequests';
 
 
 const { Header, Sider, Content } = Layout;
@@ -28,14 +29,21 @@ const SiderDemo = props => {
   
   const [collapsed,setState] = useState(false)
   const [userData,updateData] = useState({})
+  const [pageContent,updateContent] = useState()
   const updateInfo = () => {
     const getData = async() => {
       const response = await axios.get('http://localhost:8000/api/users/' + displayUser + '/')
+      updateContent(
+        <>
+        <UserDescription userInfo={response.data} updateUserData={updateInfo}/>
+        <FirendList userInfo={response.data}/>)
+        </>
+      )
+      updateData(response.data)
       return response.data
     }
-    getData().then(response => {
-      updateData(response)
-      console.log(userData);
+    getData().then(() => {
+      console.log("success")
     }).catch(e => console.log(e.response))
   }
   const toggle = () => {
@@ -55,21 +63,30 @@ const SiderDemo = props => {
 
   useEffect(() => {
       updateInfo()
- /*   axios.get('http://localhost:8000/api/users/' + displayUser + '/').then(response => {
-      updateData(response.data)
-    }).catch(e => console.log(e.response))*/
   },[])
+
+
+
     
     return (
             <Layout>
               <Sider trigger={null} collapsible collapsed={collapsed}>
                 <div className="logo" />
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                  <Menu.Item key="1" icon={<UserOutlined />}>
-                    nav 1
-            </Menu.Item>
-                  <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-                    nav 2
+                  <Menu.Item key="1" icon={<UserOutlined />} onClick={() => updateContent(
+                  <>
+                  <UserDescription userInfo={userData} updateUserData={updateInfo}/>
+                  <FirendList userInfo={userData}/>)
+                  </>
+                  )}>
+                    User profile
+                  </Menu.Item>
+                  <Menu.Item key="2" icon={<VideoCameraOutlined />} onClick={() => updateContent(
+                    <>
+                    <FriendRequests/>
+                    </>
+                  )}>
+                    Friend requests
             </Menu.Item>
                   <Menu.Item key="3" icon={<UploadOutlined />} onClick={handleLogout}>
                     logout
@@ -91,8 +108,8 @@ const SiderDemo = props => {
                     minHeight: 300,
                   }}
                 >
-                  <UserDescription userInfo={userData} updateUserData={updateInfo}/>
-                  <FirendList userInfo={userData}/>
+
+                  {pageContent}
                 </Content>
               </Layout>
             </Layout>
