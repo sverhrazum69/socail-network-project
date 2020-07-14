@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .serializers import userSerializer, friendRequestReadSerializer, friendRequestWriteSerializer
+from .serializers import GETuserSerializer, friendRequestReadSerializer, friendRequestWriteSerializer, POSTuserSerializer
 from rest_framework import generics, viewsets
 from rest_framework.response import Response
 from django.http import Http404
@@ -11,13 +11,21 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 class UsersAPI(generics.ListAPIView):
     queryset = User.objects.all()
-    serializer_class = userSerializer
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return GETuserSerializer
+        else:
+            return POSTuserSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['username','id']
 
 
 class updateUserApi(generics.RetrieveUpdateAPIView):
-    serializer_class = userSerializer
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return GETuserSerializer
+        else:
+            return POSTuserSerializer
     lookup_field = 'username'
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['username']

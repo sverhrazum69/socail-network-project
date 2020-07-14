@@ -4,15 +4,24 @@ import base64
 from django.core.files.base import ContentFile
 
 
-class userSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id','username','email','telephoneNumber','homeCountry','address','avatar','desctiption','friends']
 
 class userSerializerForFriendReq(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id','username','avatar','friends']
+
+
+class GETuserSerializer(serializers.ModelSerializer):
+    friends = userSerializerForFriendReq(many=True)
+    class Meta:
+        model = User
+        fields = ['id','username','email','telephoneNumber','homeCountry','address','avatar','desctiption','friends']
+
+
+class POSTuserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id','username','email','telephoneNumber','homeCountry','address','avatar','desctiption','friends']
 
 class friendRequestReadSerializer(serializers.ModelSerializer):
     from_user = userSerializerForFriendReq()
