@@ -8,7 +8,7 @@ class User(AbstractUser):
     telephoneNumber = models.CharField(validators = [phone_regex],max_length = 14,null=True,blank=True)
     homeCountry = models.CharField(max_length = 50,null=True,blank=True)
     address = models.CharField(max_length = 100,null=True,blank=True)
-    avatar = models.ImageField(null=True,blank=True,upload_to='')
+    avatar = models.ImageField(null=True,blank=True,upload_to='media/')
     desctiption = models.TextField(null=True,blank=True)
     friends = models.ManyToManyField('self',symmetrical=True)
 

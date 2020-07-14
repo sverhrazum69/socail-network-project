@@ -6,3 +6,4 @@ django-rest-auth
 django-allauth
 Pillow
 django-filter
+channels

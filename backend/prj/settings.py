@@ -33,6 +33,7 @@ AUTH_USER_MODEL = 'api.User'
 
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api.apps.ApiConfig',
+    'chat',
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
@@ -87,7 +89,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'prj.wsgi.application'
-
+ASGI_APPLICATION = 'prj.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
