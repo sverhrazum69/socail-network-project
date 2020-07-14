@@ -24,9 +24,11 @@ class ChatConsumer(WebsocketConsumer):
 
     #preload messages -> serialize to json -> send to webSocket
     def get_messages(self,data):
+        print("get_messages_triggered")
         messages = Messages.get_last_10_messages()
         content = {
-            'messages': message_to_json(messages)
+            'messages': messages_to_json(messages),
+            'command':'get_messages'
         }
         self.send_message(content)
 
@@ -37,6 +39,8 @@ class ChatConsumer(WebsocketConsumer):
     # create new model instance -> serialize data -> send to webSocket
 
     def new_message(self,data):
+        print(data)
+        print("new_message_triggered")
         #get author username
         author = data['from']
         #get user object
@@ -47,9 +51,9 @@ class ChatConsumer(WebsocketConsumer):
         )
         content = {
             'command':'new_message',
-            'message': message_to_json(message)
+            'messages': message_to_json(message)
         }
-        return self.chat_message(content)
+        return self.send_messages(content)
 
 
     commands = {

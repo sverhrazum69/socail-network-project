@@ -20,15 +20,35 @@
             + roomName
             + '/'
         );
-
-        chatSocket.onmessage = function(e) {
+        //load messages on when connection is ready to send data
+        // readuState === OPEN
+        chatSocket.onopen = () => {
+            chatSocket.send(JSON.stringify({'command':'get_messages'}))
+        }
+        //called when message is revieved 
+        chatSocket.onmessage = e => {
+            console.log("vsemku")
             const data = JSON.parse(e.data);
-            document.querySelector('#chat-log').value += (data.message + '\n');
+            if(data['command'] === 'get_messages'){
+                console.log(data)
+                data['messages'].forEach(element => {
+                    uploadMessage(element)
+                });
+            }else if(data['command'] === 'new_message'){
+                uploadMessage(data['messages'])
+            }else{
+                console.log("invalid command")
+            }
         };
 
         chatSocket.onclose = function(e) {
             console.error('Chat socket closed unexpectedly');
         };
+
+        const uploadMessage = (data) => {
+            console.log(data)
+            document.querySelector('#chat-log').value += (data.content + '\n');
+        }
 
         document.querySelector('#chat-message-input').focus();
         document.querySelector('#chat-message-input').onkeyup = function(e) {
@@ -42,8 +62,8 @@
             const message = messageInputDom.value;
             chatSocket.send(JSON.stringify({
                 'message': message,
-                'command':'new_message'
-
+                'command':'new_message',
+                'from' : 'admin'
             }));
             messageInputDom.value = '';
         };
