@@ -7,3 +7,4 @@ django-allauth
 Pillow
 django-filter
 channels
+channels_redis
