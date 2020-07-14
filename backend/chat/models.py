@@ -9,7 +9,7 @@ class Messages(models.Model):
     date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return self.author.username
+        return f'MESSAGE:{self.content} AUTHOR:{self.author.username}'
 
-    def get_last_10_messages(self):
-        return Messages.objects.order_by('-date').all()[10]
+    def get_last_10_messages():
+        return Messages.objects.order_by('-date').all()[:10]
