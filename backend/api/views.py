@@ -40,9 +40,9 @@ class manageFriendRequests(generics.GenericAPIView,
                             CreateModelMixin,
                             DestroyModelMixin,
                             UpdateModelMixin):
-    queryset = Friend_request.objects.all()
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = '__all__'
+    filterset_fields = ['to_user__username']
+    queryset = Friend_request.objects.all()
     def get_serializer_class(self):
         if self.request.method == 'GET':
             return friendRequestReadSerializer

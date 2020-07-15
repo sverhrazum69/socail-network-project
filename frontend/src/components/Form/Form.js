@@ -1,22 +1,22 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Form, Input, Button } from 'antd';
 
 //import ImageUpload from '../ImageUpload/ImageUpload';
 import axios from 'axios'
 function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
     }
-    return cookieValue;
+  }
+  return cookieValue;
 }
 const layout = {
   labelCol: {
@@ -39,34 +39,54 @@ const layout = {
 const csrftoken = getCookie('csrftoken');
 
 const InputForm = props => {
-  const [imgFile,updateImgFile] = useState()
+  console.log(props)
+  const [imgFile, updateImgFile] = useState()
   const onFinish = values => {
-   //  delete values.avata
+    //  delete values.avata
     const data = new FormData()
-    values.user.friends = props.placeholderValues.friends
+
+    let l = []
+    props.placeholderValues.friends.forEach(element => {
+      console.log(element)
+      l.push(parseInt(element.id))
+    });
+    values.user.friends = l
     values.user.avatar = imgFile
-    for (const [key,val] of Object.entries(values.user)){
-      if (val !== undefined){
-        data.append(key,val)
+    for (const [key, val] of Object.entries(values.user)) {
+      if (val !== undefined) {
+      
+          if (key === 'friends'){
+            console.log(val[0])
+          }
+          
+            data.append(key, val)
+          
+          
       }
     }
-    
+
+    for(let a of data.values()){
+      console.log(a)
+    }
+
     console.log(values.user)
     let config = {
-        headers: {
-            'X-CSRFToken' : csrftoken,
-        }
+      headers: {
+        'X-CSRFToken': csrftoken,
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
     }
     console.log(data);
     
-    axios.put("http://localhost:8000/api/users/" + localStorage.username + "/",data,config)
-    .then(() => {
+    
+    axios.put("http://localhost:8000/api/users/" + localStorage.username + "/", data, config)
+      .then(() => {
         props.updateUserData()
         props.exit()
-    })
-    .catch(err => {
+      })
+      .catch(err => {
         console.error(err.response);
-    })
+      })
   };
 
   return (
@@ -80,7 +100,7 @@ const InputForm = props => {
           },
         ]}
       >
-        <Input defaultValue={props.placeholderValues.username}/>
+        <Input defaultValue={props.placeholderValues.username} />
       </Form.Item>
       <Form.Item
         name={['user', 'email']}
@@ -91,19 +111,19 @@ const InputForm = props => {
           },
         ]}
       >
-        <Input defaultValue={props.placeholderValues.email}/>
+        <Input defaultValue={props.placeholderValues.email} />
       </Form.Item>
       <Form.Item name={['user', 'telephoneNumber']} label="Telephone">
         <Input defaultValue={props.placeholderValues.telephoneNumber} />
       </Form.Item>
       <Form.Item name={['user', 'homeCountry']} label="Live in">
-        <Input defaultValue={props.placeholderValues.homeCountry}/>
+        <Input defaultValue={props.placeholderValues.homeCountry} />
       </Form.Item>
       <Form.Item name={['user', 'address']} label="Address">
-        <Input defaultValue={props.placeholderValues.address}/>
+        <Input defaultValue={props.placeholderValues.address} />
       </Form.Item>
       <Form.Item name={['user', 'desctiption']} label="About me">
-        <Input.TextArea defaultValue={props.placeholderValues.desctiption}/>
+        <Input.TextArea defaultValue={props.placeholderValues.desctiption} />
       </Form.Item>
       <Form.Item name={['user', 'avatar']} label="Avatar">
         <input type="file" onChange={(e) => updateImgFile(e.target.files[0])} />

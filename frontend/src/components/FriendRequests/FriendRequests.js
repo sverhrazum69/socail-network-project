@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { List, Avatar, Button, Skeleton } from 'antd';
 import './FriendRequests.css'
+import SiderDemo from '../../containers/Layaout/Layout'
 import axios from 'axios';
 import Cookies from 'js-cookie'
 
@@ -13,7 +14,7 @@ const FriendRequests = props => {
     const [activeRequests,updateactiveRequests] = useState([])
 
     const updateInfo  = () => {
-        axios.get("http://localhost:8000/api/friendRequests/?to_user=" + props.userID)
+        axios.get("http://localhost:8000/api/friendRequests/?to_user__username=" + localStorage.username)
         .then(res => {
             updateactiveRequests([])
             res.data.forEach(obj => {
@@ -86,7 +87,7 @@ const FriendRequests = props => {
         ) : null;
 
     return (
-        <div>
+        <SiderDemo>
             <h2>
                 {console.log(activeRequests[0])}
             </h2>
@@ -115,7 +116,7 @@ const FriendRequests = props => {
                     </List.Item>
                 )}
             />
-        </div>
+        </SiderDemo>
     );
 }
 

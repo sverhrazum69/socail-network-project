@@ -3,6 +3,7 @@ import './Layaout.css';
 import { Layout, Menu } from 'antd';
 import { connect } from 'react-redux'
 import axios from 'axios'
+import { withRouter } from "react-router-dom";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -20,17 +21,14 @@ import { Redirect } from 'react-router-dom';
 
 const { Header, Sider, Content } = Layout;
 
-
-
-
 const SiderDemo = props => {
 
   const displayUser = props.match.params.username
 
   const [collapsed, setState] = useState(false)
-  const [userData, updateData] = useState({})
-  const [pageContent, updateContent] = useState()
-  const updateInfo = () => {
+//  const [userData, updateData] = useState({})
+  //const [pageContent, updateContent] = useState()
+  /*const updateInfo = () => {
     const getData = async () => {
       
       const response = await axios.get('http://localhost:8000/api/users/' + displayUser + '/')
@@ -49,7 +47,7 @@ const SiderDemo = props => {
     getData().then(() => {
       
     }).catch(e => console.log(e.response))
-  }
+  }*/
   const toggle = () => {
     setState(!collapsed);
   };
@@ -65,7 +63,7 @@ const SiderDemo = props => {
     }
   })
 
-  useEffect(() => {
+ /* useEffect(() => {
     const getData = async () => {
       
       const response = await axios.get('http://localhost:8000/api/users/' + displayUser + '/')
@@ -84,7 +82,7 @@ const SiderDemo = props => {
     getData().then(() => {
     
     }).catch(e => console.log(e.response))
-  }, [displayUser])
+  }, [displayUser])*/
 
 
 
@@ -95,22 +93,17 @@ const SiderDemo = props => {
         <div className="logo" />
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
           <Menu.Item key="1" icon={<UserOutlined />} onClick={() => {props.history.push(localStorage.username)
-          updateInfo()  
-        }/*updateContent(
-            <>
-              <UserDescription userInfo={userData} updateUserData={updateInfo} />
-              <FirendList userInfo={userData} />)
-            </>
-          )*/}>
+       //   updateInfo()  
+        }}>
             User profile
                   </Menu.Item>
           <Menu.Item key="2" icon={<VideoCameraOutlined />} onClick={() => {
             props.history.push(localStorage.username)
-            updateContent(
+          /*  updateContent(
             <>
               <FriendRequests userID={userData.id}/>
             </>
-            )
+            )*/
           }
           }>
             Friend requestss
@@ -135,8 +128,7 @@ const SiderDemo = props => {
             minHeight: 300,
           }}
         >
-
-          {pageContent}
+        {props.children}
         </Content>
       </Layout>
     </Layout>
@@ -149,4 +141,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(SiderDemo)
+export default withRouter(connect(null, mapDispatchToProps)(SiderDemo))

@@ -8,6 +8,10 @@ import SignUpForm from "./containers/SignUp/SignUp";
 
 import * as actions from './store/actions/auth'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import UserDescription from './components/UserDescription/UserDescription';
+import FriendRequests from './components/FriendRequests/FriendRequests';
+import Layout from './containers/Layaout/Layout';
+import Profile from './components/Profile/Profile';
 
 
 const mapStateToProps = state => {
@@ -25,30 +29,26 @@ const mapDispatchToProps = dispatch => {
 
 class App extends Component {
 
-  
+
   componentDidMount() {
     this.props.AutoSignup();
-    }
-  
+  }
+
   render() {
     return (
 
       <Router {...this.props}>
         {console.log(this.props)}
-        <Route exact path="/login/" component={Login}/>
+        <Route exact path="/login/" component={Login} />
         <Route exact path="/signUp/" component={SignUpForm} />
-        
-        <Route exact path="/profilePage/:username" component={SiderDemo} />
-
-        {/*<SiderDemo {...this.props}>*/}
-
-        {/*</SiderDemo> <URLRouter props = {this.props}/>*/}
-
-
+        {/* <Route path="/profilePage/:username" component={SiderDemo} /> */}
+        {/* <SiderDemo {...this.props}> */}
+          <Route exact path="/profilePage/:username/profile" component={Profile} />
+          <Route exact path="/profilePage/:username/friendRequests" component={FriendRequests} />
+       
+        {/* </SiderDemo> */}
 
       </Router>
-
-
     );
   }
 

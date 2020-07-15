@@ -38,7 +38,7 @@ const Login = props => {
     
     return (
         <div>
-            {console.log(props)}
+            {/* {console.log(props)} */}
             {errorMessage}
             {
                 props.loading
