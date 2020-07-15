@@ -42,46 +42,29 @@ const InputForm = props => {
   console.log(props)
   const [imgFile, updateImgFile] = useState()
   const onFinish = values => {
-    //  delete values.avata
-    const data = new FormData()
 
-    let l = []
+    let ids = []
     props.placeholderValues.friends.forEach(element => {
       console.log(element)
-      l.push(parseInt(element.id))
+      ids.push(parseInt(element.id))
     });
-    values.user.friends = l
+    values.user.friends = ids
     values.user.avatar = imgFile
-    for (const [key, val] of Object.entries(values.user)) {
-      if (val !== undefined) {
-      
-          if (key === 'friends'){
-            console.log(val[0])
-          }
-          
-            data.append(key, val)
-          
-          
-      }
-    }
-
-    for(let a of data.values()){
-      console.log(a)
-    }
+    
 
     console.log(values.user)
     let config = {
       headers: {
         'X-CSRFToken': csrftoken,
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "application/json"
       }
     }
-    console.log(data);
+   
     
-    
-    axios.put("http://localhost:8000/api/users/" + localStorage.username + "/", data, config)
-      .then(() => {
-        props.updateUserData()
+    axios.put("http://localhost:8000/api/users/" + localStorage.username + "/", values.user, config)
+      .then((response) => {
+        console.log(response)
+        
         props.exit()
       })
       .catch(err => {
