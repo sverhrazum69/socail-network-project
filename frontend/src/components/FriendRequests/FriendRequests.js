@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { List, Avatar, Button, Skeleton } from 'antd';
+import React, { useState, useEffect } from 'react'
+import { List, Avatar,  Skeleton } from 'antd';
 import './FriendRequests.css'
 import SiderDemo from '../../containers/Layaout/Layout'
 import axios from 'axios';
@@ -24,6 +24,7 @@ const FriendRequests = props => {
                         accepted: obj.accepted,
                         avatar: obj.from_user.avatar,
                         requestorId: obj.from_user.id,
+                        recieverId : obj.to_user.id,
                         requestorUsername: obj.from_user.username,
                         id : obj.id
                     }])
@@ -56,7 +57,7 @@ const FriendRequests = props => {
         axios.put(url,{
             'accepted':true,
             'from_user':item.requestorId,
-            'to_user':props.userID
+            'to_user': item.recieverId
         },config)
         .then(response => {
             console.log(response)

@@ -19,7 +19,7 @@ const layout = {
 const Login = props => {
 
     const handleRedirect = () => {
-        props.history.push(localStorage.username + '/')
+        props.history.push(localStorage.username + '/profile/')
     }
 
     const onFinish = values => {
@@ -38,7 +38,6 @@ const Login = props => {
     
     return (
         <div>
-            {/* {console.log(props)} */}
             {errorMessage}
             {
                 props.loading

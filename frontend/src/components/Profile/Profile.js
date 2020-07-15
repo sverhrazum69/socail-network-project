@@ -14,7 +14,7 @@ const Profile = props => {
 
             updateData(response.data)
             console.log(response.data);
-
+            
             return response.data
         }
         getData().then(() => {

@@ -1,19 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import fm from './FriendList.module.css'
 import { Button, Avatar } from 'antd';
 
 
 const FirendList = props => {
-    const [imageLinks, updateLinks] = useState([])
-    useEffect(() => {
-        console.log("triggered")
-        try{
-            props.userInfo.friends.forEach(friendData => {
-                updateLinks(imageLinks => [...imageLinks, {username:friendData.username,avatar:friendData.avatar}])
-            });
-        }
-        catch(e){}
-    }, [props.userInfo.friends])
 
     return (
         <div>

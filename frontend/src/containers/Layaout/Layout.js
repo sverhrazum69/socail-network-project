@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './Layaout.css';
 import { Layout, Menu } from 'antd';
 import { connect } from 'react-redux'
-import axios from 'axios'
 import { withRouter } from "react-router-dom";
 import {
   MenuUnfoldOutlined,
@@ -13,23 +12,16 @@ import {
 } from '@ant-design/icons';
 
 import * as actions from '../../store/actions/auth'
-import FirendList from '../../components/FriendList/FriendList';
-import UserDescription from '../../components/UserDescription/UserDescription';
-import FriendRequests from '../../components/FriendRequests/FriendRequests';
-import { Redirect } from 'react-router-dom';
 
 
 const { Header, Sider, Content } = Layout;
 
 const SiderDemo = props => {
 
-  const host = "http://" + window.location.hostname + ":3000/"
-  console.log(props)
 
-  const displayUser = props.match.params.username
 
   const [collapsed, setState] = useState(false)
-//  const [userData, updateData] = useState({})
+  //  const [userData, updateData] = useState({})
   //const [pageContent, updateContent] = useState()
   /*const updateInfo = () => {
     const getData = async () => {
@@ -66,54 +58,27 @@ const SiderDemo = props => {
     }
   })
 
- /* useEffect(() => {
-    const getData = async () => {
-      
-      const response = await axios.get('http://localhost:8000/api/users/' + displayUser + '/')
-
-      updateContent(
-        <>
-          <UserDescription userInfo={response.data} updateUserData={updateInfo} />
-          <FirendList userInfo={response.data} />)
-        </>
-      )
-      updateData(response.data)
-      console.log(response.data);
-      
-      return response.data
-    }
-    getData().then(() => {
-    
-    }).catch(e => console.log(e.response))
-  }, [displayUser])*/
-
-
-
-
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo" />
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-          <Menu.Item key="1" icon={<UserOutlined />} onClick={() => { 
-            
-            props.history.push("../../"+ localStorage.username + "/profile/")
-       //   updateInfo()  
-        }}>
+          <Menu.Item key="1" icon={<UserOutlined />} onClick={() => {
+            props.history.push("../../" + localStorage.username + "/profile/")
+          }}>
             User profile
                   </Menu.Item>
           <Menu.Item key="2" icon={<VideoCameraOutlined />} onClick={() => {
-             props.history.push("../../"+ localStorage.username +"/friendRequests/")
-          /*  updateContent(
-            <>
-              <FriendRequests userID={userData.id}/>
-            </>
-            )*/
-          }
-          }>
+            props.history.push("../../" + localStorage.username + "/friendRequests/")
+          }}>
             Friend requestss
             </Menu.Item>
-          <Menu.Item key="3" icon={<UploadOutlined />} onClick={handleLogout}>
+            <Menu.Item key="3" icon={<UserOutlined />} onClick={() => {
+            props.history.push("../../chat")
+          }}>
+            Chat rooms
+          </Menu.Item>
+          <Menu.Item key="4" icon={<UploadOutlined />} onClick={handleLogout}>
             logout
             </Menu.Item>
         </Menu>
@@ -133,8 +98,8 @@ const SiderDemo = props => {
             minHeight: 300,
           }}
         >
-        {props.children}
-        {console.log(props.history)}
+          {props.children}
+          {console.log(props.history)}
         </Content>
       </Layout>
     </Layout>
