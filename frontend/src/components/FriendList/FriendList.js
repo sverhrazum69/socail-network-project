@@ -2,26 +2,15 @@ import React, { useState, useEffect } from 'react'
 import fm from './FriendList.module.css'
 import { Button, Avatar } from 'antd';
 
-import axios from 'axios'
-
 
 const FirendList = props => {
     const [imageLinks, updateLinks] = useState([])
 
     useEffect(() => {
-        
-        try{
-            console.log(props.userInfo.friends)
-            updateLinks([])
-            props.userInfo.friends.forEach(userID => {
-                axios.get("http://localhost:8000/api/users/?id=" + userID)
-                .then(res => {  
-                    updateLinks(imageLinks => [...imageLinks, { username: res.data[0].username, avatar: res.data[0].avatar }])
-                }).catch(err => { console.log(err) })    
-            });
-        }
-        catch(e){}
-    }, [props.userInfo])
+        props.userInfo.friends.forEach(friendData => {
+            updateLinks(imageLinks => [...imageLinks, {username:friendData.username,avatar:friendData.avatar}])
+        });
+    }, [props.userInfo.friends])
 
     return (
         <div>

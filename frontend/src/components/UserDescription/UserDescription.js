@@ -28,14 +28,6 @@ const UserDescription = props => {
     }).catch(e => { console.log(e.response) })
   }
 
-
-  /*useEffect(() => {
-    axios.get('http://localhost:8000/api/users/' + props.displayUser + '/')
-      .then(response => {
-        //updateUserInfo(response.data)
-      })
-  })*/
-
   return (
     <div>
       <Descriptions title="" layout="vertical">
