@@ -23,6 +23,9 @@ const { Header, Sider, Content } = Layout;
 
 const SiderDemo = props => {
 
+  const host = "http://" + window.location.hostname + ":3000/"
+  console.log(props)
+
   const displayUser = props.match.params.username
 
   const [collapsed, setState] = useState(false)
@@ -92,13 +95,15 @@ const SiderDemo = props => {
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo" />
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-          <Menu.Item key="1" icon={<UserOutlined />} onClick={() => {props.history.push(localStorage.username)
+          <Menu.Item key="1" icon={<UserOutlined />} onClick={() => { 
+            
+            props.history.push("../../"+ localStorage.username + "/profile/")
        //   updateInfo()  
         }}>
             User profile
                   </Menu.Item>
           <Menu.Item key="2" icon={<VideoCameraOutlined />} onClick={() => {
-            props.history.push(localStorage.username)
+             props.history.push("../../"+ localStorage.username +"/friendRequests/")
           /*  updateContent(
             <>
               <FriendRequests userID={userData.id}/>
@@ -129,6 +134,7 @@ const SiderDemo = props => {
           }}
         >
         {props.children}
+        {console.log(props.history)}
         </Content>
       </Layout>
     </Layout>

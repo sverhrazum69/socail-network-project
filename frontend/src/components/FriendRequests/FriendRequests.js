@@ -107,7 +107,7 @@ const FriendRequests = props => {
                                     ? <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                                     : <Avatar src={item.avatar}/>
                                 }
-                                title={<a href={item.requestorUsername}>{"Friend request from " + item.requestorUsername}</a>}
+                                title={<a href={"../"+item.requestorUsername+"/profile"}>{"Friend request from " + item.requestorUsername}</a>}
                                 description={item.requestorUsername + " wants to be friends with you!"}
                             />
                             <button type="button" onClick={() => handleAccept(item)} key="list-loadmore-edit">accept</button>

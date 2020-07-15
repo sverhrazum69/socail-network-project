@@ -10,7 +10,7 @@ const Profile = props => {
     useEffect(() => {
         const getData = async () => {
 
-            const response = await axios.get('http://localhost:8000/api/users/' + localStorage.username + '/')
+            const response = await axios.get('http://localhost:8000/api/users/' + props.match.params.username + '/')
 
             updateData(response.data)
             console.log(response.data);
@@ -20,17 +20,17 @@ const Profile = props => {
         getData().then(() => {
 
         }).catch(e => console.log(e.response))
-    }, [localStorage.username])
+    }, [props.match.params.username])
 
 
     
         return (
             <div>
                 {userData.friends !== undefined
-                    ? <SiderDemo>
+                    ? <SiderDemo match={props.match}>
                         {console.log(userData)}
-                        <UserDescription userInfo={userData} />
-                        <FirendList userInfo={userData} />
+                        <UserDescription userInfo={userData} match={props.match}/>
+                        <FirendList userInfo={userData} match={props.match}/>
                     </SiderDemo>
                     : null
                 }

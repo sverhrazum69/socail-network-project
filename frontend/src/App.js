@@ -43,8 +43,8 @@ class App extends Component {
         <Route exact path="/signUp/" component={SignUpForm} />
         {/* <Route path="/profilePage/:username" component={SiderDemo} /> */}
         {/* <SiderDemo {...this.props}> */}
-          <Route exact path="/profilePage/:username/profile" component={Profile} />
-          <Route exact path="/profilePage/:username/friendRequests" component={FriendRequests} />
+          <Route exact path="/:username/profile" component={Profile} />
+          <Route exact path="/:username/friendRequests" component={FriendRequests} />
        
         {/* </SiderDemo> */}
 

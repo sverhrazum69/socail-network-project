@@ -19,7 +19,7 @@ const layout = {
 const Login = props => {
 
     const handleRedirect = () => {
-        props.history.push("/profilePage/" + localStorage.username)
+        props.history.push(localStorage.username + '/')
     }
 
     const onFinish = values => {

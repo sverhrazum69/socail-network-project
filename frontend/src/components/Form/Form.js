@@ -64,7 +64,7 @@ const InputForm = props => {
     axios.put("http://localhost:8000/api/users/" + localStorage.username + "/", values.user, config)
       .then((response) => {
         console.log(response)
-        
+
         props.exit()
       })
       .catch(err => {
@@ -110,7 +110,6 @@ const InputForm = props => {
       </Form.Item>
       <Form.Item name={['user', 'avatar']} label="Avatar">
         <input type="file" onChange={(e) => updateImgFile(e.target.files[0])} />
-        {/*<ImageUpload ref={imgRef}/>*/}
       </Form.Item>
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
         <Button type="primary" htmlType="submit">
