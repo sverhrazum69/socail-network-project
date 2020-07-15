@@ -14,7 +14,7 @@ const Profile = props => {
 
             updateData(response.data)
             console.log(response.data);
-            
+
             return response.data
         }
         getData().then(() => {
@@ -29,7 +29,7 @@ const Profile = props => {
                 {userData.friends !== undefined
                     ? <SiderDemo match={props.match}>
                         {console.log(userData)}
-                        <UserDescription userInfo={userData} match={props.match}/>
+                        <UserDescription userInfo={userData} match={props.match} updateData={updateData}/>
                         <FirendList userInfo={userData} match={props.match}/>
                     </SiderDemo>
                     : null

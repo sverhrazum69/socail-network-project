@@ -26,16 +26,7 @@ const layout = {
     span: 16,
   },
 };
-/*const validateMessages = {
-  required: `${label} is required!`,
-  types: {
-    email: `${label} is not validate email!`,
-    number: `${label} is not a validate number!`,
-  },
-  number: {
-    range: `${label} must be between ${min} and ${max}`,
-  },
-};*/
+
 const csrftoken = getCookie('csrftoken');
 
 const InputForm = props => {
@@ -63,8 +54,7 @@ const InputForm = props => {
     
     axios.put("http://localhost:8000/api/users/" + localStorage.username + "/", values.user, config)
       .then((response) => {
-        console.log(response)
-
+        props.updateData(response.data)
         props.exit()
       })
       .catch(err => {

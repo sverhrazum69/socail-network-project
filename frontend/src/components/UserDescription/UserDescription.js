@@ -45,7 +45,7 @@ const UserDescription = props => {
       </Descriptions>
       {
         props.userInfo.username === localStorage.username
-          ? <PopupForm placeholderValues={props.userInfo} updateUserData={props.updateUserData}/>
+          ? <PopupForm placeholderValues={props.userInfo} updateData={props.updateData}/>
           : <button type="submit" onClick={sendFriendRequest}>Add friend</button>
       }
 
