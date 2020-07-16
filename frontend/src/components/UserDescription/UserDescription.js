@@ -13,6 +13,16 @@ const UserDescription = props => {
     }
   }
 
+  const friends = username => {
+    props.userInfo.friends.forEach(element => {
+      if (element.username === username){
+        console.log('true')
+        return true
+      }
+    return false
+    });
+  }
+
   const sendFriendRequest = () => {
     let getId = async () => {
       let response = await axios.get('http://localhost:8000/api/users/' + localStorage.username + '/')
@@ -30,6 +40,7 @@ const UserDescription = props => {
 
   return (
     <div>
+      {console.log(props)}
       <Descriptions title="" layout="vertical">
         <Descriptions.Item>{props.userInfo.avatar !== null ? <Avatar size={128} src={props.userInfo.avatar} /> : <Avatar size={128} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}</Descriptions.Item>
       </Descriptions>
@@ -46,7 +57,9 @@ const UserDescription = props => {
       {
         props.userInfo.username === localStorage.username
           ? <PopupForm placeholderValues={props.userInfo} updateData={props.updateData}/>
-          : <button type="submit" onClick={sendFriendRequest}>Add friend</button>
+          : friends(localStorage.username)
+            ? <button type="submit" onClick={sendFriendRequest}>Add friend</button>
+            : <button type="submit">Start chat</button>
       }
 
     </div>

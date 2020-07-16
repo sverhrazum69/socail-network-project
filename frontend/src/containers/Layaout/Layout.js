@@ -21,28 +21,7 @@ const SiderDemo = props => {
 
 
   const [collapsed, setState] = useState(false)
-  //  const [userData, updateData] = useState({})
-  //const [pageContent, updateContent] = useState()
-  /*const updateInfo = () => {
-    const getData = async () => {
-      
-      const response = await axios.get('http://localhost:8000/api/users/' + displayUser + '/')
 
-      updateContent(
-        <>
-          <UserDescription userInfo={response.data} updateUserData={updateInfo} />
-          <FirendList userInfo={response.data} />)
-        </>
-      )
-
-
-      updateData(response.data)
-      return response.data
-    }
-    getData().then(() => {
-      
-    }).catch(e => console.log(e.response))
-  }*/
   const toggle = () => {
     setState(!collapsed);
   };
@@ -51,6 +30,8 @@ const SiderDemo = props => {
     props.logout()
     props.history.push("/login")
   }
+
+
 
   useEffect(() => {
     if (localStorage.getItem('token') === null) {
@@ -98,8 +79,11 @@ const SiderDemo = props => {
             minHeight: 300,
           }}
         >
-          {props.children}
-          {console.log(props.history)}
+          <div className="children-wrapper">
+            {props.children}
+          </div>
+          
+          
         </Content>
       </Layout>
     </Layout>

@@ -19,3 +19,7 @@
   .site-layout .site-layout-background {
     background: #fff;
   }
+
+.children-wrapper{
+  min-height: 75vh;
+}
