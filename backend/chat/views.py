@@ -25,10 +25,11 @@ class chats(generics.GenericAPIView,ListModelMixin,RetrieveModelMixin,CreateMode
 
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['participants__username']
+    lookup_field = 'code'
 
-    def get(self,request,pk=None):
-        if pk:
-            return self.retrieve(request,pk)
+    def get(self,request,code=None):
+        if code:
+            return self.retrieve(request,code)
         return self.list(request)
     
     def post(self,request):

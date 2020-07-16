@@ -45,7 +45,7 @@ class App extends Component {
         <Route exact path="/:username/profile" component={Profile} />
         <Route exact path="/:username/friendRequests" component={FriendRequests} />
         <Route exact path="/chat/"  component={Chat}/>
-        {/* <Route exact path="/chat/:chatcode" component={ChatPage} /> */}
+        <Route exact path="/chat/:chatcode" component={ChatPage} />
         {/* </SiderDemo> */}
 
       </Router>

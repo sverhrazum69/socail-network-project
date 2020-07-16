@@ -9,7 +9,6 @@ const FriendRequests = props => {
     const [state, setState] = useState({
         initLoading: true,
         loading: false,
-        
     })
     const [activeRequests,updateactiveRequests] = useState([])
 

@@ -28,16 +28,16 @@ const Chat = props => {
                 renderItem={item => (
                     
                     <List.Item>
-                        {console.log(item)}
+                        {console.log(props)}
                         {item.participants[1].avatar === null
                             ? <List.Item.Meta
                                 avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                title={<a href="https://ant.design">{item.code}</a>}
+                                title={<button onClick={() => props.history.push('../chat/' + item.code)}>{"Chat with " + item.participants[1].username}</button>}xz
                                 description={"Chat with " + item.participants[1].username}
                             />
                             : <List.Item.Meta
                                 avatar={<Avatar src={item.participants[1].avatar} />}
-                                title={<a href="https://ant.design">{item.code}</a>}
+                                title={<button onClick={() => props.history.push('../chat/' + item.code)}>{"Chat with " + item.participants[1].username}</button>}
                                 description={"Chat with " + item.participants[1].username}
                             />
                         }
