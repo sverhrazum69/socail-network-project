@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import FriendRequests from './components/FriendRequests/FriendRequests';
 import Profile from './components/Profile/Profile';
 import Chat from './components/Chat/Chat';
+import ChatPage from './components/ChatPage/ChatPage';
 
 
 const mapStateToProps = state => {
@@ -44,6 +45,7 @@ class App extends Component {
         <Route exact path="/:username/profile" component={Profile} />
         <Route exact path="/:username/friendRequests" component={FriendRequests} />
         <Route exact path="/chat/"  component={Chat}/>
+        {/* <Route exact path="/chat/:chatcode" component={ChatPage} /> */}
         {/* </SiderDemo> */}
 
       </Router>

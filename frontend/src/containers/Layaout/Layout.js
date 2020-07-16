@@ -10,7 +10,7 @@ import {
   VideoCameraOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
-
+import axios from 'axios'
 import * as actions from '../../store/actions/auth'
 
 
@@ -18,7 +18,22 @@ const { Header, Sider, Content } = Layout;
 
 const SiderDemo = props => {
 
+  const [userData, updateData] = useState({})
 
+    useEffect(() => {
+        const getData = async () => {
+
+            const response = await axios.get('http://localhost:8000/api/users/' + localStorage.username + '/')
+
+            updateData(response.data)
+            console.log(response.data);
+
+            return response.data
+        }
+        getData().then(() => {
+
+        }).catch(e => console.log(e.response))
+    }, [])
 
   const [collapsed, setState] = useState(false)
 
@@ -38,6 +53,18 @@ const SiderDemo = props => {
       props.history.push("/login")
     }
   })
+
+  const updateCHildProps = React.Children.map(
+    props.children,
+    (child,i) => {
+      if (child){
+        return React.cloneElement(child,{
+          loggedUser:userData
+        })
+      }
+
+    }
+  )
 
   return (
     <Layout>
@@ -80,7 +107,9 @@ const SiderDemo = props => {
           }}
         >
           <div className="children-wrapper">
-            {props.children}
+            {console.log(props.children)}
+            {updateCHildProps}
+            {/* {props.children} */}
           </div>
           
           
