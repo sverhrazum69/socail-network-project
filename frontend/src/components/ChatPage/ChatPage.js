@@ -77,7 +77,7 @@ class ChatPage extends React.Component {
                 <p>{message.content}
                     <br />
                     <small className={message.author === currentUser ? 'sent' : 'replies'}>
-                        {Math.round((new Date().getTime() - new Date(message.timestamp).getTime()) / 60000)} minutes ago
+                        {Math.round((new Date().getTime() - new Date(message.date).getTime()) / 60000)} minutes ago
                     </small>
                 </p>
             </li>
