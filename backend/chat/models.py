@@ -18,6 +18,8 @@ class Messages(models.Model):
 
     def __str__(self):
         return f'MESSAGE:{self.content} AUTHOR:{self.author.username}'
+    def get_last_10_messages():
+        return Messages.objects.order_by('-date').all()[:10]
 
 
 class ChatRoom(models.Model):
@@ -25,11 +27,11 @@ class ChatRoom(models.Model):
     participants = models.ManyToManyField(User,related_name="participants")
     messages = models.ManyToManyField(Messages,related_name="messages",blank = True)
     constraints.UniqueConstraint(fields=['user1','user2'],name='unique_rooms')
-
+    
     def __str__(self):
         return str(self.code)
 
-    def get_last_5_messages_(self,user):
-        return self.messages.objects.order_by('-date').all()[:10]
+    def get_last_10_messages(self):
+        return self.messages.order_by('-date').all()[:10]
 
 m2m_changed.connect(participants_changed,sender=ChatRoom.participants.through)

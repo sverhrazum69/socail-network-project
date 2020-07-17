@@ -3,7 +3,7 @@ from asgiref.sync import async_to_sync
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from channels.generic.websocket import WebsocketConsumer
-from .models import Messages
+from .models import Messages, ChatRoom
 from django.core import serializers
 
 User = get_user_model()
@@ -24,11 +24,14 @@ class ChatConsumer(WebsocketConsumer):
 
     #preload messages -> serialize to json -> send to webSocket
     def get_messages(self,data):
+
         print("get_messages_triggered")
-        messages = Messages.get_last_10_messages()
+        chat = get_object_or_404(ChatRoom,code = data['chatCode'])
+        
+        messages = chat.get_last_10_messages()
         content = {
             'messages': messages_to_json(messages),
-            'command':'get_messages'
+            'command':'messages'
         }
         self.send_message(content)
 
@@ -45,14 +48,18 @@ class ChatConsumer(WebsocketConsumer):
         author = data['from']
         #get user object
         author_user = get_object_or_404(User,username=author)
+        
         message = Messages.objects.create(
             author=author_user,
             content=data['message']
         )
+        chat = get_object_or_404(ChatRoom,code = data['chatCode'])
+        chat.messages.add(message)
         content = {
             'command':'new_message',
-            'messages': message_to_json(message)
+            'message': message_to_json(message)
         }
+        print(content)
         return self.send_messages(content)
 
 

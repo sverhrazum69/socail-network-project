@@ -22,7 +22,7 @@ class ChatPage extends React.Component {
         console.log(props)
         this.waitForSocketConnection(() => {
             WebSocketInstance.addCallbacks(this.setMessages.bind(this), this.addMessage.bind(this))
-            WebSocketInstance.getMessages(localStorage.username);
+            WebSocketInstance.getMessages(localStorage.username,props.match.params.chatcode);
         });
     }
 
@@ -61,7 +61,7 @@ class ChatPage extends React.Component {
             from: "admin",
             content: this.state.message,
         };
-        WebSocketInstance.newChatMessage(messageObject);
+        WebSocketInstance.newChatMessage(messageObject,this.props.match.params.chatcode);
         this.setState({
             message: ''
         });

@@ -55,19 +55,20 @@ class WebSockets{
     }
 
     getMessages(username,chatCode){
+        console.log(chatCode)
         this.sendMessage({
             command:'get_messages',
             username:username,
-         //   chatCode:chatCode
+            chatCode:chatCode
         })
     }
 
-    newChatMessage(message){
+    newChatMessage(message,chatCode){
         this.sendMessage({
             command:'new_message',
             from:message.from,
             message:message.content,
-            chatCode:message.chatCode
+            chatCode:chatCode
         })
     }
 
