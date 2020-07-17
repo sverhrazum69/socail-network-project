@@ -88,7 +88,7 @@ class ChatPage extends React.Component {
         const messages = this.state.messages;
         return (
             <SiderDemo>
-                <div id="frame">
+                <div id="frame" className="chat-wrapper">
                     <div className="content">
                         <div className="contact-profile">
                             <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
@@ -120,6 +120,7 @@ class ChatPage extends React.Component {
                                         placeholder="Write your message..." />
                                     <i className="fa fa-paperclip attachment" aria-hidden="true"></i>
                                     <button id="chat-message-submit" className="submit">
+                                        SEND MESSAGE
                                         <i className="fa fa-paper-plane" aria-hidden="true"></i>
                                     </button>
                                 </div>
