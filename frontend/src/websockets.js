@@ -14,18 +14,18 @@ class WebSockets{
     }
 
     connect(chatUrl){
-        const path = `ws://
-        + localhost:8000
-        + /ws/chat/
-        + ${chatUrl}
-        + /`
+        console.log(chatUrl)
+        const path = `ws://localhost:8000/ws/chat/314/`
         console.log(path)
         this.socketRef = new WebSocket(path)
         this.socketRef.onopen = () => {
             console.log("Open socket")
         }
+        this.socketNewMessage(JSON.stringify({
+            command:'get_messages'
+        }))
         this.socketRef.onmessage = e =>{
-            console.log("new message: ",e)
+            this.socketNewMessage(e.data)
         }
         this.socketRef.onerror = e => {
             console.log(e.message)
@@ -58,7 +58,7 @@ class WebSockets{
         this.sendMessage({
             command:'get_messages',
             username:username,
-            chatCode:chatCode
+         //   chatCode:chatCode
         })
     }
 
@@ -85,23 +85,9 @@ class WebSockets{
         }
     }
 
-    waitForConnection(callback){
-        const socket = this.socketRef
-        const recursion = this.waitForConnection;
-        setTimeout(
-            () => {
-                if(socket.readyState === 1){
-                    console.log("secure connection");
-                    if (callback != null){
-                        callback()
-                    }
-                    return;
-                }
-                else{
-                    console.log("waiting for conn");
-                    recursion(callback)
-                }
-            },1)
+
+    state(){
+        return this.socketRef.readyState
     }
 }
 

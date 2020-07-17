@@ -57,6 +57,7 @@ const SiderDemo = props => {
   const updateCHildProps = React.Children.map(
     props.children,
     (child,i) => {
+      console.log(child)
       if (child){
         return React.cloneElement(child,{
           loggedUser:userData
@@ -109,6 +110,7 @@ const SiderDemo = props => {
           <div className="children-wrapper">
             {console.log(props.children)}
             {updateCHildProps}
+
             {/* {props.children} */}
           </div>
           

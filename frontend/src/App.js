@@ -13,6 +13,7 @@ import Chat from './components/Chat/Chat';
 import ChatPage from './components/ChatPage/ChatPage';
 
 
+
 const mapStateToProps = state => {
   return {
     isAuthenticated: state.token != null
