@@ -11,11 +11,12 @@ class WebSockets{
 
     constructor(){
         this.socketRef = null
+
     }
 
     connect(chatUrl){
         console.log(chatUrl)
-        const path = `ws://localhost:8000/ws/chat/314/`
+        const path = `ws://localhost:8000/ws/chat/${chatUrl}/`
         console.log(path)
         this.socketRef = new WebSocket(path)
         this.socketRef.onopen = () => {

@@ -19,7 +19,6 @@ class ChatPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {}
-        console.log(props)
         this.waitForSocketConnection(() => {
             WebSocketInstance.addCallbacks(this.setMessages.bind(this), this.addMessage.bind(this))
             WebSocketInstance.getMessages(localStorage.username,props.match.params.chatcode);
@@ -58,7 +57,7 @@ class ChatPage extends React.Component {
     sendMessageHandler = (e) => {
         e.preventDefault();
         const messageObject = {
-            from: "admin",
+            from: localStorage.username,
             content: this.state.message,
         };
         WebSocketInstance.newChatMessage(messageObject,this.props.match.params.chatcode);
@@ -68,7 +67,8 @@ class ChatPage extends React.Component {
     }
 
     renderMessages = (messages) => {
-        const currentUser = "admin";
+        console.log(localStorage.username)
+        const currentUser = localStorage.username;
         return messages.map((message, i) => (
             <li
                 key={message.id}
@@ -92,7 +92,7 @@ class ChatPage extends React.Component {
                     <div className="content">
                         <div className="contact-profile">
                             <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-                            <p>username</p>
+                            <p>localStorage.username</p>
                             <div className="social-media">
                                 <i className="fa fa-facebook" aria-hidden="true"></i>
                                 <i className="fa fa-twitter" aria-hidden="true"></i>
