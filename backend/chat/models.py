@@ -19,18 +19,23 @@ def friendAdded(sender,**kwargs):
             'participants':[kwargs['instance'].id,kwargs['pk_set']]
         }
         requests.post(url=url,data=data)
-    # elif kwargs['action'] == 'pre_remove':
-    #     chatObjects = ChatRoom.objects.all()
-    #     for obj in chatObjects:
-    #         print(type(kwargs['pk_set']))
-    #         print(obj.participants.filter(Q(id=3)))
-    #         print(kwargs['instance'].id)
-            
-    #         chatObj = obj.participants.filter(Q(id = kwargs['instance'].id) & Q(id = kwargs['pk_set'].pop()))
-    #         print(chatObj)
-    #         if chatObj:
-    #             chatObj.delete()
-    #             break
+    elif kwargs['action'] == 'pre_remove':
+        #chatObjects = ChatRoom.objects.all()
+        # for obj in chatObjects:
+        #     print(type(kwargs['pk_set']))
+        r = ChatRoom.objects.filter(participants__id = kwargs['instance'].id).filter(participants__id = kwargs['pk_set'].pop())
+        print(ChatRoom.objects.filter(Q(participants__id = 3) & Q(participants__id = 2)))
+        #     # print(obj.participants.filter(Q(id=3)))
+            # print(kwargs['instance'].id)
+            # if 
+            # chatObj = participants.obj.filter(Q(id = kwargs['instance'].id) & Q(id = kwargs['pk_set'].pop()))
+            # print(chatObj)
+            # if chatObj:
+            #     chatObj.delete()
+            #     break
+        if r:
+            r.delete()
+
 def participants_changed(sender,**kwargs):
     if kwargs['instance'].participants.count() > 2:
         raise ValidationError("Cant add more then 2 members to a chatt")
