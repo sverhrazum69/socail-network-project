@@ -1,11 +1,36 @@
 from django.db import models
-from django.db.models import constraints
+from django.db.models import constraints, Q
 from django.contrib.auth import get_user_model
 from django.db.models.signals import m2m_changed
 from django.core.exceptions import ValidationError
+from random import randint
+import requests
 
 User = get_user_model()
 
+
+def friendAdded(sender,**kwargs):
+    print(kwargs['action'])
+    if kwargs['action'] == 'pre_add':
+        print(kwargs)
+        url = 'http://localhost:8000/chat/rooms/'
+        data = {
+            'code':randint(1,10000),
+            'participants':[kwargs['instance'].id,kwargs['pk_set']]
+        }
+        requests.post(url=url,data=data)
+    # elif kwargs['action'] == 'pre_remove':
+    #     chatObjects = ChatRoom.objects.all()
+    #     for obj in chatObjects:
+    #         print(type(kwargs['pk_set']))
+    #         print(obj.participants.filter(Q(id=3)))
+    #         print(kwargs['instance'].id)
+            
+    #         chatObj = obj.participants.filter(Q(id = kwargs['instance'].id) & Q(id = kwargs['pk_set'].pop()))
+    #         print(chatObj)
+    #         if chatObj:
+    #             chatObj.delete()
+    #             break
 def participants_changed(sender,**kwargs):
     if kwargs['instance'].participants.count() > 2:
         raise ValidationError("Cant add more then 2 members to a chatt")
@@ -35,3 +60,4 @@ class ChatRoom(models.Model):
         return self.messages.order_by('-date').all()[:10]
 
 m2m_changed.connect(participants_changed,sender=ChatRoom.participants.through)
+m2m_changed.connect(friendAdded,sender=User.friends.through)

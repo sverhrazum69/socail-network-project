@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 
+
 class User(AbstractUser):
     phone_regex = RegexValidator(regex=r'^\+?3?8?(0[5-9][0-9]\d{7})$', message="Phone number must be entered in the valid format (for example: '+380999999999')")
     telephoneNumber = models.CharField(validators = [phone_regex],max_length = 14,null=True,blank=True)
@@ -18,4 +19,3 @@ class Friend_request(models.Model):
     accepted = models.BooleanField(default=False)
     def __str__(self):
         return f"From {self.from_user.username} to {self.to_user.username}"
-

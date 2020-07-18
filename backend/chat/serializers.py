@@ -4,6 +4,7 @@ from .models import ChatRoom
 
 class GetChatSerializer(serializers.ModelSerializer):
     participants = userSerializerForFriendReq(many=True)
+    
     class Meta:
         model = ChatRoom
         fields = '__all__'
